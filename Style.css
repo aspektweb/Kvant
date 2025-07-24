@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0d0d0d;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+header.floating-header {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(45deg, #1e1e1e, #2b2b2b);
+  animation: floatHeader 3s ease-in-out infinite;
+}
+
+@keyframes floatHeader {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.floating-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 40px;
+  animation: floatSection 4s ease-in-out infinite;
+}
+
+.floating-section.reverse {
+  flex-direction: row-reverse;
+}
+
+.floating-section img {
+  width: 250px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 255, 200, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.floating-section img:hover {
+  transform: scale(1.05) rotate(-2deg);
+}
+
+.floating-section div {
+  max-width: 400px;
+}
+
+@keyframes floatSection {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(15px); }
+}
+
+.footer {
+  text-align: center;
+  padding: 30px;
+  background: #1e1e1e;
+  color: #ccc;
+}
+.footer a {
+  color: #00ffe1;
+  text-decoration: none;
+}
