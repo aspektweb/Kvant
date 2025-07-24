@@ -3,100 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nike 3D Krossovka Sayti</title>
+  <title>Nike 3D Prezentatsiyasi</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <header class="header">
-    <h1>Nike Krossovka Prezentatsiyasi</h1>
-    <p>Yengil, zamonaviy, professional dizaynlar bilan tanishing</p>
+  <!-- === HEADER === -->
+  <header class="main-header">
+    <div class="header-content">
+      <h1>Nike 3D Krossovkalar</h1>
+      <p>Kelajak texnologiyasi bilan yaratilgan sport oyoq kiyimlari</p>
+      <a href="#models" class="btn-glow">Ko‘rish</a>
+    </div>
+    <div class="header-bg">
+      <!-- Stil bilan 3D fon effekt qo‘shamiz -->
+    </div>
   </header>
 
-  <!-- MODEL 1 -->
-  <section class="product floating">
-    <img src="https://i.ibb.co/YR5HkNm/nike1.png" alt="Nike 1" />
-    <div class="info">
-      <h2>Nike Air Zoom</h2>
-      <p>Sportchilar uchun mukammal moslik va engil materiallar.</p>
-      <a href="#" class="btn" onclick="openForm()">Buyurtma berish</a>
+  <!-- === MODEL SECTION START === -->
+  <section id="models" class="model-section">
+    <div class="model-card">
+      <img src="https://i.ibb.co/YR5HkNm/nike1.png" alt="Nike Air Zoom" class="model-img" />
+      <div class="model-info">
+        <h2>Nike Air Zoom</h2>
+        <p>Sportchilar uchun mukammal moslik, zamonaviy va qulay materiallardan ishlab chiqilgan. Harakatda engil va kuchli himoya.</p>
+        <a href="#" class="btn-order" onclick="openForm()">Buyurtma berish</a>
+      </div>
     </div>
-  </section>
 
-  <!-- MODEL 2 -->
-  <section class="product floating reverse">
-    <img src="https://i.ibb.co/vq59ZJG/nike2.png" alt="Nike 2" />
-    <div class="info">
-      <h2>Nike Revolution</h2>
-      <p>Shahar uslubiga mos, zamonaviy va qulay krossovka.</p>
-      <a href="#" class="btn" onclick="openForm()">Buyurtma berish</a>
+    <div class="model-card reverse">
+      <img src="https://i.ibb.co/vq59ZJG/nike2.png" alt="Nike Revolution" class="model-img" />
+      <div class="model-info">
+        <h2>Nike Revolution</h2>
+        <p>Shahar uslubidagi zamonaviy dizayn bilan qulay yurish va uslubni birlashtirgan ajoyib model.</p>
+        <a href="#" class="btn-order" onclick="openForm()">Buyurtma berish</a>
+      </div>
     </div>
-  </section>
-
-  <!-- MODEL 3 -->
-  <section class="product floating">
-    <img src="https://i.ibb.co/Jp9L64n/nike3.png" alt="Nike 3" />
-    <div class="info">
-      <h2>Nike Infinity Run</h2>
-      <p>Yugurish uchun maxsus ishlab chiqilgan, oyoqni himoyalovchi model.</p>
-      <a href="#" class="btn" onclick="openForm()">Buyurtma berish</a>
-    </div>
-  </section>
-
-  <!-- MODEL 4 -->
-  <section class="product floating reverse">
-    <img src="https://i.ibb.co/jMdx7HJ/nike4.png" alt="Nike 4" />
-    <div class="info">
-      <h2>Nike Pegasus</h2>
-      <p>Havodagidek yengillik – uzoq masofaga yugurish uchun ideal model.</p>
-      <a href="#" class="btn" onclick="openForm()">Buyurtma berish</a>
-    </div>
-  </section>
-
-  <!-- MODEL 5 -->
-  <section class="product floating">
-    <img src="https://i.ibb.co/KhZTmyL/nike5.png" alt="Nike 5" />
-    <div class="info">
-      <h2>Nike Air Max</h2>
-      <p>Klassik dizayn va maksimal qulaylikni birlashtirgan brend yulduzi.</p>
-      <a href="#" class="btn" onclick="openForm()">Buyurtma berish</a>
-    </div>
-  </section>
-
-  <!-- MODEL 6 -->
-  <section class="product floating reverse">
-    <img src="https://i.ibb.co/xgGfR8k/nike6.png" alt="Nike 6" />
-    <div class="info">
-      <h2>Nike Free Run</h2>
-      <p>Erkin harakat uchun mo‘ljallangan, ultrayengil materiallardan tikilgan model.</p>
-      <a href="#" class="btn" onclick="openForm()">Buyurtma berish</a>
-    </div>
-  </section>
-
-  <!-- Buyurtma formasi (popup) -->
-  <div class="form-popup" id="orderForm">
-    <form class="form-container">
-      <h2>Buyurtma berish</h2>
-      <input type="text" placeholder="Ismingiz" required />
-      <input type="email" placeholder="Email manzilingiz" required />
-      <input type="text" placeholder="Tanlangan model (masalan: Air Max)" required />
-      <button type="submit" class="btn">Yuborish</button>
-      <button type="button" class="btn close" onclick="closeForm()">Bekor qilish</button>
-    </form>
-  </div>
-
-  <footer class="footer">
-    <p>Instagram: <a href="https://www.instagram.com/as1peckt" target="_blank">@as1peckt</a></p>
-  </footer>
-
-  <script>
-    function openForm() {
-      document.getElementById("orderForm").style.display = "block";
-    }
-    function closeForm() {
-      document.getElementById("orderForm").style.display = "none";
-    }
-  </script>
-
-</body>
-</html>
