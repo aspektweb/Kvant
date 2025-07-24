@@ -1,4 +1,165 @@
-/* === Asosiy tayyorlash === */
+/* === Contact form === */
+.contact {
+  background: linear-gradient(to bottom, #0e0e0e, #111);
+  padding: 80px 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.contact h2 {
+  font-size: 2rem;
+  color: #00ffe7;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #00ffe7;
+}
+.contact form {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.contact input,
+.contact textarea {
+  background: #1a1a1a;
+  border: 1px solid #00ffe7;
+  padding: 15px 20px;
+  font-size: 1rem;
+  color: #fff;
+  border-radius: 10px;
+  outline: none;
+  transition: 0.3s ease;
+}
+.contact input:focus,
+.contact textarea:focus {
+  border-color: #00ffcc;
+  box-shadow: 0 0 10px #00ffe7;
+}
+.contact button {
+  padding: 14px 30px;
+  background: #00ffe7;
+  border: none;
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 0 20px #00ffe7;
+}
+.contact button:hover {
+  background: #00c9aa;
+  box-shadow: 0 0 30px #00ffe7;
+}
+
+/* === Footer === */
+.footer {
+  background: #111;
+  padding: 30px 60px;
+  text-align: center;
+  color: #777;
+  font-size: 0.9rem;
+  border-top: 1px solid #222;
+}
+.footer a {
+  color: #00ffe7;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* === Responsive media === */
+@media screen and (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .hero .hero-text {
+    padding-right: 0;
+  }
+  .hero img {
+    margin-top: 30px;
+    width: 80%;
+  }
+  .model-card,
+  .model-card.reverse {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  .header nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .header nav a {
+    margin: 10px 15px;
+  }
+  .models {
+    padding: 60px 20px;
+  }
+  .contact {
+    padding: 60px 20px;
+  }
+}
+
+/* === Floating Animation for Sections === */
+.floating-section {
+  animation: floatSection 6s ease-in-out infinite;
+}
+@keyframes floatSection {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* === Neon glowing effect for text === */
+.neon-text {
+  color: #00ffe7;
+  text-shadow: 0 0 5px #00ffe7, 0 0 10px #00ffe7, 0 0 20px #00ffe7;
+}
+
+/* === 3D Hover Cards === */
+.model-card {
+  perspective: 1000px;
+}
+.model-card:hover .model-info {
+  transform: rotateY(5deg);
+}
+.model-info {
+  transition: transform 0.5s ease;
+}
+
+/* === Scrollbar Customization === */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ffe7;
+  border-radius: 5px;
+}
+
+/* === Instagram Link at Footer === */
+.footer .instagram {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #00ffe7;
+  transition: 0.3s ease;
+}
+.footer .instagram:hover {
+  color: #00ffcc;
+  text-shadow: 0 0 10px #00ffe7;
+}/* === Asosiy tayyorlash === */
 * {
   margin: 0;
   padding: 0;
