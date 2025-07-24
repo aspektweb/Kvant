@@ -1,62 +1,97 @@
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
   font-family: 'Segoe UI', sans-serif;
   background: #0d0d0d;
   color: #fff;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
-
-header.floating-header {
+.header {
   text-align: center;
   padding: 80px 20px;
-  background: linear-gradient(45deg, #1e1e1e, #2b2b2b);
-  animation: floatHeader 3s ease-in-out infinite;
+  background: linear-gradient(145deg, #111, #222);
+  animation: floatHeader 6s ease-in-out infinite;
+}
+.header h1 {
+  font-size: 3rem;
+  color: #00fff7;
+  text-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7;
+}
+.header p {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-top: 10px;
 }
 
-@keyframes floatHeader {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.floating-section {
+.product {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
-  gap: 40px;
-  animation: floatSection 4s ease-in-out infinite;
+  padding: 60px 10%;
+  gap: 50px;
 }
-
-.floating-section.reverse {
+.product.reverse {
   flex-direction: row-reverse;
 }
 
-.floating-section img {
-  width: 250px;
+.product img {
+  width: 320px;
   height: auto;
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(0, 255, 200, 0.3);
-  transition: transform 0.3s ease;
+  transition: transform 1s;
+  filter: drop-shadow(0 0 20px #00ffe1);
+}
+.product img:hover {
+  transform: rotateY(180deg) scale(1.1);
 }
 
-.floating-section img:hover {
-  transform: scale(1.05) rotate(-2deg);
-}
-
-.floating-section div {
+.info {
   max-width: 400px;
 }
+.info h2 {
+  font-size: 2rem;
+  color: #00ffe1;
+  margin-bottom: 10px;
+}
+.info p {
+  font-size: 1.1rem;
+  color: #ddd;
+  margin-bottom: 20px;
+}
 
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #00ffe1;
+  color: #000;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  box-shadow: 0 0 20px #00ffe1;
+  transition: 0.3s;
+}
+.btn:hover {
+  background: #fff;
+  box-shadow: 0 0 40px #00ffe1, 0 0 60px #00ffe1;
+  transform: scale(1.05);
+}
+
+.floating {
+  animation: floatSection 5s ease-in-out infinite;
+}
 @keyframes floatSection {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(15px); }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
 }
 
 .footer {
   text-align: center;
-  padding: 30px;
-  background: #1e1e1e;
-  color: #ccc;
+  padding: 40px;
+  background: #1a1a1a;
+  color: #888;
 }
 .footer a {
   color: #00ffe1;
