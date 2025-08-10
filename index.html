@@ -1,108 +1,234 @@
-<!doctype html>
-<html lang="uz">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Restaurant App — Auth Demo</title>
-  <style>
-    body{font-family:Inter,system-ui,Arial;background:#07121a;color:#e6f7ff;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
-    .card{width:360px;padding:18px;border-radius:12px;background:rgba(255,255,255,0.03)}
-    input,button{width:100%;padding:10px;margin-top:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
-    .row{display:flex;gap:8px}
-    .row input{flex:1}
-    .muted{opacity:0.8;font-size:13px;margin-top:8px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Designs - Effortless Comfort. Lasting Quality.</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        /* Color Variables */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #1a1a1a;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: var(--light);
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1513519245088-0e12902e5a38');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20%;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 5rem 10%;
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 3rem 10%;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-icons a {
+            color: var(--light);
+            font-size: 1.5rem;
+        }
+        
+        .copyright {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h2>Ro'yxatdan o'tish / Login</h2>
-
-    <input id="email" placeholder="Email" type="email" />
-    <input id="password" placeholder="Parol" type="password" />
-    <button id="btnSignup">Ro'yxatdan o'tish</button>
-    <button id="btnLogin">Kirish</button>
-    <button id="btnLogout" style="display:none">Chiqish</button>
-
-    <div class="muted" id="status">Holat: not signed in</div>
-    <hr/>
-    <div>
-      <strong>Test uchun:</strong>
-      <div class="muted">Qayd: bu demo faqat authentification & profile yozadi. Administratorga email yuborish Cloud Function orqali amalga oshiriladi.</div>
-    </div>
-  </div>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore-compat.js"></script>
-
-  <script>
-    // --- 1) PUT YOUR FIREBASE CONFIG HERE ---
-    const firebaseConfig = {
-      apiKey: "REPLACE_API_KEY",
-      authDomain: "REPLACE_PROJECT.firebaseapp.com",
-      projectId: "REPLACE_PROJECT",
-      storageBucket: "REPLACE_PROJECT.appspot.com",
-      messagingSenderId: "REPLACE_ID",
-      appId: "REPLACE_APPID"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    const emailEl = document.getElementById('email');
-    const passEl = document.getElementById('password');
-    const btnSignup = document.getElementById('btnSignup');
-    const btnLogin = document.getElementById('btnLogin');
-    const btnLogout = document.getElementById('btnLogout');
-    const status = document.getElementById('status');
-
-    btnSignup.addEventListener('click', async () => {
-      const email = emailEl.value.trim();
-      const password = passEl.value;
-      if(!email || !password){ alert('Email va parol kiriting'); return; }
-      try{
-        const cred = await auth.createUserWithEmailAndPassword(email, password);
-        const user = cred.user;
-        // Save extra profile to Firestore (this will also be available for Cloud Function)
-        await db.collection('users').doc(user.uid).set({
-          email: user.email,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          displayName: null,
-          verified: user.emailVerified || false
-        });
-        alert('Ro‘yxatdan o‘tildi. Confirm function will send notification if configured.');
-      }catch(e){ alert('Signup error: '+e.message) }
-    });
-
-    btnLogin.addEventListener('click', async () => {
-      const email = emailEl.value.trim();
-      const password = passEl.value;
-      try{
-        await auth.signInWithEmailAndPassword(email, password);
-      }catch(e){ alert('Login error: '+e.message) }
-    });
-
-    btnLogout.addEventListener('click', async () => {
-      await auth.signOut();
-    });
-
-    auth.onAuthStateChanged(async (user) => {
-      if(user){
-        status.innerText = 'Holat: signed in as ' + user.email;
-        btnLogout.style.display = 'block';
-        btnLogin.style.display = 'none';
-        btnSignup.style.display = 'none';
-        // Optionally fetch profile
-        const doc = await db.collection('users').doc(user.uid).get();
-        // you can show profile fields if needed
-      } else {
-        status.innerText = 'Holat: not signed in';
-        btnLogout.style.display = 'none';
-        btnLogin.style.display = 'block';
-        btnSignup.style.display = 'block';
-      }
-    });
-  </script>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">MODERN DESIGNS</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Products</a>
+            <a href="#">Portfolio</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>EFFORTLESS COMFORT.<br>LASTING QUALITY.</h1>
+        <p>Contemporary circuit valves for your interior, design and bring electrical response into your everyday spaces.</p>
+        <a href="#" class="btn">Explore Our Designs</a>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">OUR SOLUTIONS</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Circuit Valves</h3>
+                <p>Modern electrical solutions integrated seamlessly into your living spaces.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏠</div>
+                <h3>Interior Design</h3>
+                <p>Creating spaces that combine functionality with aesthetic appeal.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔌</div>
+                <h3>Smart Integration</h3>
+                <p>Bringing electrical responsiveness to your everyday environment.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Careers</a>
+            <a href="#">FAQ</a>
+        </div>
+        <div class="social-icons">
+            <a href="#">📱</a>
+            <a href="#">📘</a>
+            <a href="#">📸</a>
+            <a href="#">🐦</a>
+        </div>
+        <p class="copyright">© 2023 Modern Designs. All rights reserved.</p>
+    </footer>
 </body>
 </html>
