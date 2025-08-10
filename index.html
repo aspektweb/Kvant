@@ -1,29 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nike 3D Prezentatsiyasi</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>3D Sneaker Showcase — Demo</title>
+  <style>
+    :root{
+      --bg:#08121a; --card:#0f1720; --accent:#00f0ff; --neon:#ff2d95;
+      --glass: rgba(255,255,255,0.06);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#04121a 0%, #061824 60%, #07131a 100%);color:#e6f7ff}
+    .wrap{height:100vh;display:grid;grid-template-columns:1fr 420px;gap:24px;padding:32px;align-items:center}
+    .canvas-card{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 10px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+    canvas{display:block;width:100%;height:100%}
+    header.topbar{position:absolute;left:18px;top:18px;display:flex;gap:10px;align-items:center}
+    .brand{font-weight:700;letter-spacing:0.6px}
+    .controls{padding:22px}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;box-shadow:0 6px 30px rgba(2,6,23,0.6);backdrop-filter: blur(8px);}
+    h1{margin:0;font-size:20px}
+    p.lead{opacity:0.8;margin-top:8px;font-size:13px}
+    .specs{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .spec{background:var(--glass);padding:8px;border-radius:8px;font-size:13px;opacity:0.95}
+    .btn{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent),var(--neon));color:#012;cursor:pointer;font-weight:700}
+    .small{font-size:13px;padding:8px 10px}
+    .link{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px;border-radius:10px;color:inherit}
+    footer.note{position:absolute;right:18px;bottom:18px;font-size:12px;opacity:0.7}
+    /* responsive */
+    @media (max-width:900px){.wrap{grid-template-columns:1fr;padding:18px;grid-auto-rows:1fr 360px}.controls{order:2}}
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="canvas-card" id="canvasCard" style="height:78vh;">
+      <header class="topbar"><div class="brand">3D Sneaker Showcase</div></header>
+      <canvas id="three-canvas"></canvas>
+      <footer class="note">Rotate: mouse drag • Zoom: scroll • Click: animate</footer>
+    </div><div class="controls">
+  <div class="panel">
+    <h1>AirFlex — Neon Runner (demo)</h1>
+    <p class="lead">Interactive 3D sneaker mock built with Three.js. Replace the procedural mesh with a real <code>.gltf</code> model for production.</p>
+    <div class="specs">
+      <div class="spec">WebGL: Three.js</div>
+      <div class="spec">Animations: floating, rotate</div>
+    </div>
 
-  <!-- GLASS NAVBAR -->
-  <nav class="glass-navbar">
-    <ul>
-      <li><a href="#">🏠 Bosh sahifa</a></li>
-      <li><a href="#">👟 Modellar</a></li>
-      <li><a href="#">📦 Buyurtma</a></li>
-      <li><a href="#">📞 Aloqa</a></li>
-    </ul>
-  </nav>
+    <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+      <button id="btnSpin" class="btn small">Spin 360°</button>
+      <button id="btnDownload" class="link small">Export screenshot</button>
+    </div>
 
-  <!-- HEADER WITH IMAGE -->
-  <header class="main-header">
-    <h1>Nike Air 3D</h1>
-    <p>Yengil. Kuchli. Innovatsion.</p>
-    <a href="#" class="btn-glow">Hozir ko‘rish</a>
-  </header>
+    <hr style="margin:14px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)" />
+    <p style="margin:0;font-size:13px;opacity:0.85">Instructions to deploy on GitHub Pages:</p>
+    <ol style="color:#cfeefc;font-size:13px">
+      <li>Create a new GitHub repository and push this single HTML file as <code>index.html</code>.</li>
+      <li>Go to repository Settings → Pages → Source → choose <code>main</code> branch and <code>/ (root)</code>. Save.</li>
+      <li>Your site will be available at <code>https://&lt;username&gt;.github.io/&lt;repo&gt;/</code> within a minute.</li>
+    </ol>
 
-</body>
+    <p style="margin-top:10px;font-size:13px;opacity:0.9">Want me to add a downloadable .gltf sample, or split into multiple files (JS/CSS)? Reply: <strong>Yes - add model</strong> or <strong>Split files</strong>.</p>
+  </div>
+</div>
+
+  </div>  <!-- Three.js from CDN -->  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>  <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>  <script>
+    // Basic three.js scene with a stylized 'sneaker-like' prototype using shapes
+    const canvas = document.getElementById('three-canvas');
+    const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2('#07131a', 0.02);
+
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
+    camera.position.set(0, 1.6, 4);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.minDistance = 1.6;
+    controls.maxDistance = 10;
+
+    // Lights
+    const hemi = new THREE.HemisphereLight(0x88eeff, 0x001122, 0.6);
+    scene.add(hemi);
+    const key = new THREE.DirectionalLight(0xffc8ff, 1.0);
+    key.position.set(5,5,5); key.castShadow = true; key.shadow.radius = 6; scene.add(key);
+
+    // Ground plane (soft) for shadow catch
+    const groundMat = new THREE.MeshStandardMaterial({color:0x06131a, roughness:1, metalness:0});
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(40,40), groundMat);
+    ground.rotation.x = -Math.PI/2; ground.position.y = -1; ground.receiveShadow = true; scene.add(ground);
+
+    // Sneaker prototype group
+    const sneaker = new THREE.Group();
+
+    // Body (elongated rounded box)
+    const bodyGeo = new THREE.BoxGeometry(2.2, 0.5, 0.8);
+    // bevel effect by scaling and using Phong/Standard material with clearcoat
+    const bodyMat = new THREE.MeshPhysicalMaterial({color:0x0ff4ff, metalness:0.05, roughness:0.35, clearcoat:0.5, roughnessMap:null});
+    const body = new THREE.Mesh(bodyGeo, bodyMat); body.castShadow=true; body.position.set(0,0,0);
+    body.scale.set(1.2,1,1); body.rotation.z = 0.05;
+
+    // Rounding via small subsurface spheres to fake a smooth shoe
+    const roundMat = new THREE.MeshStandardMaterial({color:0x00c1ff, roughness:0.4});
+    const front = new THREE.Mesh(new THREE.SphereGeometry(0.45,32,24), roundMat); front.position.set(1.05,0,0); front.scale.set(0.8,0.6,0.6); front.castShadow=true;
+    const back = new THREE.Mesh(new THREE.SphereGeometry(0.45,32,24), roundMat); back.position.set(-1.05,0,0); back.scale.set(0.65,0.5,0.5); back.castShadow=true;
+
+    // Sole - layered planes
+    const soleMat = new THREE.MeshStandardMaterial({color:0x0a1018, roughness:0.9});
+    const sole = new THREE.Mesh(new THREE.BoxGeometry(2.4,0.18,0.95), soleMat); sole.position.set(0,-0.35,0); sole.castShadow=true;
+
+    // Laces as thin toruses
+    const laceMat = new THREE.MeshStandardMaterial({color:0xffffff, metalness:0.2, roughness:0.5});
+    const lace1 = new THREE.Mesh(new THREE.TorusGeometry(0.18,0.03,16,100,Math.PI), laceMat); lace1.rotation.x = Math.PI/2; lace1.position.set(0.2,0.15,0); lace1.scale.set(0.8,1,1);
+    const lace2 = lace1.clone(); lace2.position.set(-0.1,0.05,0);
+
+    sneaker.add(body, front, back, sole, lace1, lace2);
+    sneaker.position.y = 0.2;
+    sneaker.rotation.y = -0.3;
+    scene.add(sneaker);
+
+    // Neon emissive trim (glowing stripe)
+    const stripeMat = new THREE.MeshBasicMaterial({color:0xff2d95});
+    const stripe = new THREE.Mesh(new THREE.BoxGeometry(1.4,0.08,0.02), stripeMat); stripe.position.set(0,0.05,0.42); sneaker.add(stripe);
+
+    // Small floating particles for ambience
+    const particlesGeo = new THREE.BufferGeometry();
+    const count = 120;
+    const positions = new Float32Array(count*3);
+    for(let i=0;i<count;i++){positions[i*3+0]=(Math.random()-0.5)*6;positions[i*3+1]=Math.random()*2;positions[i*3+2]=(Math.random()-0.5)*6}
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+    const particlesMat = new THREE.PointsMaterial({size:0.02, transparent:true, opacity:0.9});
+    const particles = new THREE.Points(particlesGeo, particlesMat); scene.add(particles);
+
+    // Resize
+    function resize(){
+      const rect = canvas.parentElement.getBoundingClientRect();
+      renderer.setSize(rect.width, rect.height);
+      camera.aspect = rect.width/rect.height; camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Animation loop
+    let t = 0;
+    function animate(){
+      requestAnimationFrame(animate);
+      t += 0.01;
+      // floating motion
+      sneaker.position.y = 0.15 + Math.sin(t*0.9)*0.05;
+      sneaker.rotation.y += 0.003;
+      particles.rotation.y = t*0.02;
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Button interactions
+    document.getElementById('btnSpin').addEventListener('click', ()=>{
+      // spin animation: smooth 360 over 1.2s
+      const start = performance.now(); const dur = 1200; const init = sneaker.rotation.y;
+      function spin(now){
+        const p = Math.min(1,(now-start)/dur);
+        sneaker.rotation.y = init + p*Math.PI*2;
+        if(p<1) requestAnimationFrame(spin);
+      }
+      requestAnimationFrame(spin);
+    });
+
+    document.getElementById('btnDownload').addEventListener('click', ()=>{
+      renderer.render(scene, camera);
+      const data = renderer.domElement.toDataURL('image/png');
+      const a = document.createElement('a'); a.href = data; a.download = 'sneaker-screenshot.png'; a.click();
+    });
+
+    // Click to pulse animation
+    window.addEventListener('pointerdown', ()=>{
+      // quick scale pulse
+      const s0 = sneaker.scale.clone(); const target = new THREE.Vector3(1.06,1.06,1.06);
+      const start = performance.now(); const dur=260;
+      function pulse(now){
+        const p = Math.min(1,(now-start)/dur);
+        sneaker.scale.lerpVectors(s0, target, (Math.sin(p*Math.PI*2)*0.5+0.5));
+        if(p<1) requestAnimationFrame(pulse);
+        else sneaker.scale.copy(s0);
+      }
+      requestAnimationFrame(pulse);
+    });
+
+    // Helpful: replace procedural mesh with .gltf model
+    // Example (commented):
+    // const loader = new THREE.GLTFLoader();
+    // loader.load('path/to/model.gltf', (gltf)=>{ scene.remove(sneaker); scene.add(gltf.scene); })
+  </script></body>
 </html>
