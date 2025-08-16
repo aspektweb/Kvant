@@ -3,232 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Designs - Effortless Comfort. Lasting Quality.</title>
+    <title>EngUz - Ingliz Tilini O'rganish</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #10b981 100%);
         }
-        
-        /* Color Variables */
-        :root {
-            --primary: #2c3e50;
-            --secondary: #34495e;
-            --accent: #3498db;
-            --light: #ecf0f1;
-            --dark: #1a1a1a;
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        
-        /* Navigation */
-        nav {
-            background-color: var(--primary);
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .language-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
         }
-        
-        .logo {
-            color: var(--light);
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
+        .language-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-        
-        .nav-links a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-        
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1513519245088-0e12902e5a38');
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 20%;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        
-        .btn {
-            background-color: var(--accent);
-            color: white;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 4px;
-            font-weight: 600;
+        .slider {
+            position: absolute;
             cursor: pointer;
-            transition: background-color 0.3s;
-            text-decoration: none;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #4f46e5;
+            transition: .4s;
+            border-radius: 34px;
         }
-        
-        .btn:hover {
-            background-color: #2980b9;
-        }
-        
-        /* Features Section */
-        .features {
-            padding: 5rem 10%;
-            background-color: var(--light);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--primary);
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: var(--light);
-            padding: 3rem 10%;
-            text-align: center;
-        }
-        
-        .footer-links {
+        .slider:before {
+            position: absolute;
+            content: "UZ";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            font-size: 10px;
+            font-weight: bold;
+            color: #4f46e5;
         }
-        
-        .footer-links a {
-            color: var(--light);
-            text-decoration: none;
+        input:checked + .slider {
+            background-color: #10b981;
         }
-        
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+        input:checked + .slider:before {
+            content: "EN";
+            transform: translateX(30px);
+            color: #10b981;
         }
-        
-        .social-icons a {
-            color: var(--light);
-            font-size: 1.5rem;
+        .tab-content {
+            display: none;
         }
-        
-        .copyright {
-            opacity: 0.8;
-            font-size: 0.9rem;
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav>
-        <div class="logo">MODERN DESIGNS</div>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Products</a>
-            <a href="#">Portfolio</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </div>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>EFFORTLESS COMFORT.<br>LASTING QUALITY.</h1>
-        <p>Contemporary circuit valves for your interior, design and bring electrical response into your everyday spaces.</p>
-        <a href="#" class="btn">Explore Our Designs</a>
-    </section>
-    
-    <!-- Features Section -->
-    <section class="features">
-        <h2 class="section-title">OUR SOLUTIONS</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Circuit Valves</h3>
-                <p>Modern electrical solutions integrated seamlessly into your living spaces.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🏠</div>
-                <h3>Interior Design</h3>
-                <p>Creating spaces that combine functionality with aesthetic appeal.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔌</div>
-                <h3>Smart Integration</h3>
-                <p>Bringing electrical responsiveness to your everyday environment.</p>
+<body class="font-sans bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-language text-3xl"></i>
+                    <h1 class="text-2xl font-bold">EngUz</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="home">Bosh Sahifa</a>
+                    <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="lessons">Darslar</a>
+                    <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="exercises">Mashqlar</a>
+                    <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="grammar">Grammatika</a>
+                    <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="vocabulary">Lug'at</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <label class="language-toggle">
+                        <input type="checkbox" id="languageToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <button class="md:hidden text-white text-2xl" id="mobileMenuButton">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
         </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Careers</a>
-            <a href="#">FAQ</a>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-indigo-700 py-4" id="mobileMenu">
+            <div class="container mx-auto px-4 flex flex-col space-y-3">
+                <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="home">Bosh Sahifa</a>
+                <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="lessons">Darslar</a>
+                <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="exercises">Mashqlar</a>
+                <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="grammar">Grammatika</a>
+                <a href="#" class="text-white hover:text-yellow-200 font-medium" data-tab="vocabulary">Lug'at</a>
+            </div>
         </div>
-        <div class="social-icons">
-            <a href="#">📱</a>
-            <a href="#">📘</a>
-            <a href="#">📸</a>
-            <a href="#">🐦</a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Home Tab -->
+        <div class="tab-content active" id="home-tab">
+            <section class="mb-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4" data-uz="Ingliz tilini oson va tez o'rganing!" data-en="Learn English easily and quickly!">Ingliz tilini oson va tez o'rganing!</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-uz="Bizning innovatsion metodikamiz va interaktiv darslarimiz bilan ingliz tilini mukammal o'zlashtiring." data-en="Master English perfectly with our innovative methodology and interactive lessons.">Bizning innovatsion metodikamiz va interaktiv darslarimiz bilan ingliz tilini mukammal o'zlashtiring.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 card-hover">
+                        <div class="p-6">
+                            <div class="text-indigo-600 text-4xl mb-4">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2" data-uz="Strukturalangan Darslar" data-en="Structured Lessons">Strukturalangan Darslar</h3>
+                            <p class="text-gray-600" data-uz="Boshlang'ichdan yuqori darajagacha bo'lgan tizimli darslar" data-en="Systematic lessons from beginner to advanced level">Boshlang'ichdan yuqori darajagacha bo'lgan tizimli darslar</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 card-hover">
+                        <div class="p-6">
+                            <div class="text-green-500 text-4xl mb-4">
+                                <i class="fas fa-headphones"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2" data-uz="Audio Materiallar" data-en="Audio Materials">Audio Materiallar</h3>
+                            <p class="text-gray-600" data-uz="Tinglash qobiliyatingizni rivojlantirish uchun audio darslar" data-en="Audio lessons to develop your listening skills">Tinglash qobiliyatingizni rivojlantirish uchun audio darslar</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 card-hover">
+                        <div class="p-6">
+                            <div class="text-purple-600 text-4xl mb-4">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2" data-uz="Professional O'qituvchilar" data-en="Professional Teachers">Professional O'qituvchilar</h3>
+                            <p class="text-gray-600" data-uz="Tajribali o'qituvchilar tomonidan tayyorlangan video darslar" data-en="Video lessons prepared by experienced teachers">Tajribali o'qituvchilar tomonidan tayyorlangan video darslar</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center" data-uz="Nega Bizni Tanlashadi?" data-en="Why Choose Us?">Nega Bizni Tanlashadi?</h2>
+                
+                <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Learning English" class="rounded-lg shadow-lg w-full">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4" data-uz="O'zbekcha Inglizcha Metodikasi" data-en="Uzbek-English Methodology">O'zbekcha Inglizcha Metodikasi</h3>
+                        <p class="text-gray-600 mb-4" data-uz="Bizning maxsus metodikamiz o'zbek tilida so'zlashuvchi o'quvchilar uchun mo'ljallangan bo'lib, ingliz tilini tushunish va o'rganish jarayonini osonlashtiradi." data-en="Our special methodology is designed for Uzbek-speaking students, making the process of understanding and learning English easier.">Bizning maxsus metodikamiz o'zbek tilida so'zlashuvchi o'quvchilar uchun mo'ljallangan bo'lib, ingliz tilini tushunish va o'rganish jarayonini osonlashtiradi.</p>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-uz="O'zbek va ingliz tillaridagi qiyosiy grammatika" data-en="Comparative grammar in Uzbek and English">O'zbek va ingliz tillaridagi qiyosiy grammatika</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-uz="Har bir dars uchun audio va video materiallar" data-en="Audio and video materials for each lesson">Har bir dars uchun audio va video materiallar</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-uz="Interaktiv mashqlar va testlar" data-en="Interactive exercises and tests">Interaktiv mashqlar va testlar</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Interactive Learning" class="rounded-lg shadow-lg w-full">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4" data-uz="Interaktiv O'rganish Tajribasi" data-en="Interactive Learning Experience">Interaktiv O'rganish Tajribasi</h3>
+                        <p class="text-gray-600 mb-4" data-uz="Bizning platformamizda siz faqat o'qimasdan, balki turli interaktiv mashqlar, o'yinlar va real hayotiy vaziyatlar orqali ingliz tilini o'rganasiz." data-en="On our platform, you don't just read, but learn English through various interactive exercises, games and real-life situations.">Bizning platformamizda siz faqat o'qimasdan, balki turli interaktiv mashqlar, o'yinlar va real hayotiy vaziyatlar orqali ingliz tilini o'rganasiz.</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-indigo-50 p-4 rounded-lg">
+                                <div class="text-indigo-600 text-2xl mb-2">
+                                    <i class="fas fa-gamepad"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800" data-uz="O'quv O'yinlari" data-en="Learning Games">O'quv O'yinlari</h4>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <div class="text-green-600 text-2xl mb-2">
+                                    <i class="fas fa-microphone"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800" data-uz="Nutq Mashqlari" data-en="Speaking Exercises">Nutq Mashqlari</h4>
+                            </div>
+                            <div class="bg-yellow-50 p-4 rounded-lg">
+                                <div class="text-yellow-600 text-2xl mb-2">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800" data-uz="Hamkorlik" data-en="Collaboration">Hamkorlik</h4>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <div class="text-purple-600 text-2xl mb-2">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800" data-uz="Yutuqlar" data-en="Achievements">Yutuqlar</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="gradient-bg text-white rounded-xl p-8 md:p-12 shadow-lg mb-16">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold mb-6" data-uz="Ingliz Tilini Biz Bilan O'rganishni Boshlang" data-en="Start Learning English With Us">Ingliz Tilini Biz Bilan O'rganishni Boshlang</h2>
+                    <p class="text-xl mb-8" data-uz="Hoziroq ro'yxatdan o'ting va ingliz tilini o'rganish sari birinchi qadamni tashlang!" data-en="Register now and take the first step towards learning English!">Hoziroq ro'yxatdan o'ting va ingliz tilini o'rganish sari birinchi qadamni tashlang!</p>
+                    <button class="bg-white text-indigo-600 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 shadow-lg" data-uz="Bepul Ro'yxatdan O'tish" data-en="Sign Up for Free">Bepul Ro'yxatdan O'tish</button>
+                </div>
+            </section>
         </div>
-        <p class="copyright">© 2023 Modern Designs. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+        
+        <!-- Lessons Tab -->
+        <div class="tab-content" id="lessons-tab">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8" data-uz="Darslar" data-en="Lessons">Darslar</h2>
+            
+            <div class="mb-8">
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button class="level-btn px-4 py-2 rounded-full bg-indigo-600 text-white" data-level="beginner" data-uz="Boshlang'ich" data-en="Beginner">Boshlang'ich</button>
+                    <button class="level-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800" data-level="intermediate" data-uz="O'rta" data-en="Intermediate">O'rta</button>
+                    <button class="level-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800" data-level="advanced" data-uz="Yuqori" data-en="Advanced">Yuqori</button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Beginner Lessons -->
+                    <div class="lesson-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 card-hover" data-level="beginner">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm font-medium rounded-full" data-uz="Boshlang'ich" data-en="Beginner">Boshlang'ich</span>
+                                <span class="text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">1. Inglizcha Salomlashish</h3>
+                            <p class="text-gray-600 mb-4" data-uz="Ingliz tilida salomlashish va xayrlashish usullari" data-en="Ways to greet and say goodbye in English">Ingliz tilida salomlashish va xayrlashish usullari</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500"><i class="far fa-clock mr-1"></i> <span data-uz="15 daqiqa" data-en="15 min">15 daqiqa</span></span>
+                                <button class="text-indigo-600 font-medium hover:text-indigo-800" data-uz="Darsni boshlash" data-en="Start Lesson">Darsni boshlash</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 card-hover" data-level="beginner">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm font-medium rounded-full" data-uz="Boshlang'ich" data-en="Beginner">Boshlang'ich</span>
+                                <span class="text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">2. O'zimni Tanishtirish</h3>
+                            <p class="text-gray-600 mb-4" data-uz="Ingliz tilida o'zingiz haqingizda gapirish" data-en="Talking about yourself in English">Ingliz tilida o'zingiz haqingizda gapirish</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500"><i class="far fa-clock mr-1"></i> <span data-uz="20 daqiqa" data-en="20 min">20 daqiqa</span></span>
+                                <button class="text-indigo-600 font-medium hover:text-indigo-800" data-uz="Darsni boshlash" data-en="Start Lesson">Darsni boshlash</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 card-hover" data-level="beginner">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm font-medium rounded-full" data-uz="Boshlang'ich" data-en="Beginner">Boshlang'ich</span>
+                                <span class="text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                  
