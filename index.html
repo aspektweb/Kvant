@@ -3,49 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Weather AI</title>
+    <title>Kvant Weather Pro</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <div class="container">
+        <div class="search-box">
+            <input type="text" id="cityInput" placeholder="Shahar nomini kiriting...">
+            <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
 
-<div class="app-container">
-    <div class="search-box">
-        <i class="fa-solid fa-location-dot"></i>
-        <input type="text" id="cityInput" placeholder="Shahar nomini kiriting...">
-        <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
+        <div class="weather-content">
+            <img src="https://openweathermap.org/img/wn/02d@4x.png" id="mainIcon" class="weather-icon">
+            <h1 id="temp">--°C</h1>
+            <h2 id="cityName">Shahar...</h2>
+            <p id="desc">Havo holati</p>
 
-    <div class="weather-box">
-        <div class="box">
-            <div class="info-weather">
-                <div class="weather">
-                    <img src="https://openweathermap.org/img/wn/10d@2x.png" id="weatherIcon">
-                    <p class="temperature">0<span>°C</span></p>
-                    <p class="description">Havo holati</p>
+            <div class="extra-info">
+                <div class="info-card">
+                    <i class="fa-solid fa-droplet"></i>
+                    <div>
+                        <span id="humidity">--%</span>
+                        <p>Namlik</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-wind"></i>
+                    <div>
+                        <span id="wind">-- km/s</span>
+                        <p>Shamol</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="weather-details">
-        <div class="humidity">
-            <i class="fa-solid fa-water"></i>
-            <div class="text">
-                <span id="humidityVal">0%</span>
-                <p>Namlik</p>
-            </div>
-        </div>
-        <div class="wind">
-            <i class="fa-solid fa-wind"></i>
-            <div class="text">
-                <span id="windVal">0Km/h</span>
-                <p>Shamol tezligi</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
