@@ -3,31 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jonli Ob-havo</title>
+    <title>Modern Weather AI</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="card">
-        <div class="search">
-            <input type="text" id="city-input" placeholder="Shahar nomini yozing..." spellcheck="false">
-            <button id="search-btn">Qidirish</button>
-        </div>
-        
-        <div class="weather">
-            <h1 class="temp">--°C</h1>
-            <h2 class="city">Shahar nomi</h2>
-            <div class="details">
-                <div class="col">
-                    <p class="humidity">Namlik: --%</p>
-                </div>
-                <div class="col">
-                    <p class="wind">Shamol: -- km/s</p>
+<div class="app-container">
+    <div class="search-box">
+        <i class="fa-solid fa-location-dot"></i>
+        <input type="text" id="cityInput" placeholder="Shahar nomini kiriting...">
+        <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <div class="weather-box">
+        <div class="box">
+            <div class="info-weather">
+                <div class="weather">
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" id="weatherIcon">
+                    <p class="temperature">0<span>°C</span></p>
+                    <p class="description">Havo holati</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div class="weather-details">
+        <div class="humidity">
+            <i class="fa-solid fa-water"></i>
+            <div class="text">
+                <span id="humidityVal">0%</span>
+                <p>Namlik</p>
+            </div>
+        </div>
+        <div class="wind">
+            <i class="fa-solid fa-wind"></i>
+            <div class="text">
+                <span id="windVal">0Km/h</span>
+                <p>Shamol tezligi</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
