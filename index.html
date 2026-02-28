@@ -3,120 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Academic Creative Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<title>Journalist Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 
 :root{
---bg1:#0f2027;
---bg2:#203a43;
---bg3:#2c5364;
---card:rgba(255,255,255,0.08);
---text:white;
---accent:#00ffd5;
-}
-
-body.light{
---bg1:#f5f7fa;
---bg2:#e4ecf3;
---bg3:#ffffff;
---card:rgba(0,0,0,0.05);
+--bg:#f4f4f4;
 --text:#111;
---accent:#0077ff;
+--accent:#b30000;
+--card:white;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+font-family:'Inter',sans-serif;
+background:var(--bg);
 color:var(--text);
-min-height:100vh;
-padding:30px;
-transition:0.4s;
+padding:40px 20px;
 }
 
 .container{
-max-width:1000px;
+max-width:900px;
 margin:auto;
-background:var(--card);
-backdrop-filter:blur(20px);
-padding:40px;
-border-radius:25px;
-box-shadow:0 8px 40px rgba(0,0,0,0.3);
 }
 
-h1{text-align:center;margin-bottom:10px;}
-.subtitle{text-align:center;opacity:0.8;margin-bottom:20px;}
-
-button{
-padding:10px 18px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-font-weight:600;
-margin-top:10px;
-background:var(--accent);
+h1{
+font-family:'Playfair Display',serif;
+font-size:40px;
+margin-bottom:10px;
 }
 
-input, textarea{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:12px;
-border:none;
-}
-
-textarea{min-height:100px;}
-
-.post{
-background:rgba(255,255,255,0.1);
-padding:20px;
-border-radius:18px;
-margin-top:15px;
-position:relative;
-}
-
-.privateTag{
-position:absolute;
-top:10px;
-right:15px;
-font-size:12px;
-color:red;
-}
-
-.stats{
-text-align:right;
-font-size:14px;
+.subtitle{
 opacity:0.7;
+margin-bottom:40px;
 }
 
-.topBar{
-display:flex;
-justify-content:space-between;
-margin-bottom:20px;
+.article{
+background:var(--card);
+padding:25px;
+margin-bottom:25px;
+border-radius:8px;
+box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+
+.article img{
+width:100%;
+margin-top:15px;
+border-radius:6px;
+}
+
+.article a{
+display:inline-block;
+margin-top:15px;
+color:var(--accent);
+text-decoration:none;
+font-weight:600;
+}
+
+.admin-panel{
+background:#111;
+color:white;
+padding:30px;
+border-radius:10px;
+margin-bottom:40px;
+}
+
+.admin-panel input,
+.admin-panel textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:6px;
+}
+
+.admin-panel button{
+margin-top:15px;
+padding:10px 15px;
+border:none;
+background:var(--accent);
+color:white;
+cursor:pointer;
+border-radius:6px;
 }
 
 .hidden{display:none;}
 
-.fileLink{
-display:block;
-margin-top:10px;
-color:var(--accent);
-text-decoration:none;
-}
-
-.modeSwitch{
-cursor:pointer;
+.footer{
+margin-top:60px;
 font-size:14px;
-opacity:0.8;
-}
-
-.loginBox{
-max-width:400px;
-margin:100px auto;
-background:var(--card);
-padding:30px;
-border-radius:20px;
+opacity:0.6;
 text-align:center;
 }
 
@@ -124,119 +101,101 @@ text-align:center;
 </head>
 <body>
 
-<div id="loginPage" class="loginBox">
-<h2>Portfolio Login</h2>
-<input type="password" id="password" placeholder="Parol kiriting">
-<button onclick="login()">Kirish</button>
-</div>
-
-<div id="mainPage" class="hidden">
-
 <div class="container">
 
-<div class="topBar">
-<div>
-<h1>Mening Akademik Portfolio</h1>
-<div class="subtitle">Ijodiy ishlar va maqolalar</div>
-</div>
-<div>
-<span class="modeSwitch" onclick="toggleTheme()">Dark/Light</span>
-<br>
-<span class="modeSwitch" onclick="academicMode()">Academic Mode</span>
-</div>
+<h1>Mening Ijodiy Maqolalarim</h1>
+<div class="subtitle">
+Jurnalistika yo‘nalishi bo‘yicha chop etilgan maqolalar to‘plami
 </div>
 
-<div id="adminPanel">
-<h3>Yangi ish qo‘shish</h3>
-<input type="text" id="title" placeholder="Sarlavha">
-<textarea id="content" placeholder="Tavsif yoki maqola matni"></textarea>
-<input type="file" id="fileUpload">
-<label><input type="checkbox" id="privateCheck"> Private</label>
-<button onclick="addPost()">Joylashtirish</button>
+<div id="adminPanel" class="admin-panel hidden">
+<h2>Yangi maqola qo‘shish</h2>
+<input type="text" id="title" placeholder="Maqola nomi">
+<textarea id="description" placeholder="Qisqacha tavsif"></textarea>
+<input type="file" id="imageUpload" accept="image/*">
+<input type="file" id="pdfUpload" accept=".pdf">
+<button onclick="addArticle()">Saqlash</button>
 </div>
 
-<hr style="margin:25px 0;opacity:0.3;">
+<div id="articles"></div>
 
-<div id="posts"></div>
-
-<div class="stats">
-Ko‘ruvchilar soni: <span id="views"></span>
+<div class="footer">
+© 2026 | Shaxsiy jurnalist portfolio
 </div>
 
-</div>
 </div>
 
 <script>
 
-const PASSWORD="1234";
+const SECRET_KEY = "2026press";
 
-let posts=JSON.parse(localStorage.getItem("posts"))||[];
-let views=localStorage.getItem("views")||0;
-views++;
-localStorage.setItem("views",views);
+const urlParams = new URLSearchParams(window.location.search);
+if(urlParams.get("admin") === SECRET_KEY){
+document.getElementById("adminPanel").classList.remove("hidden");
+}
 
-document.getElementById("views").innerText=views;
+let articles = JSON.parse(localStorage.getItem("journalArticles")) || [];
 
-function login(){
-let input=document.getElementById("password").value;
-if(input===PASSWORD){
-document.getElementById("loginPage").classList.add("hidden");
-document.getElementById("mainPage").classList.remove("hidden");
-renderPosts();
+function addArticle(){
+let title = document.getElementById("title").value;
+let desc = document.getElementById("description").value;
+let imgFile = document.getElementById("imageUpload").files[0];
+let pdfFile = document.getElementById("pdfUpload").files[0];
+
+if(!title) return alert("Sarlavha kiriting");
+
+let reader = new FileReader();
+
+reader.onload = function(e){
+let imageData = e.target.result;
+
+if(pdfFile){
+let pdfReader = new FileReader();
+pdfReader.onload = function(p){
+saveArticle(title, desc, imageData, p.target.result);
+}
+pdfReader.readAsDataURL(pdfFile);
 }else{
-alert("Noto‘g‘ri parol");
-}
+saveArticle(title, desc, imageData, null);
 }
 
-function addPost(){
-let title=document.getElementById("title").value;
-let content=document.getElementById("content").value;
-let file=document.getElementById("fileUpload").files[0];
-let isPrivate=document.getElementById("privateCheck").checked;
+}
 
-if(title && content){
-let reader=new FileReader();
-reader.onload=function(e){
-posts.push({
-title,
-content,
-file:e.target.result || null,
-private:isPrivate
-});
-localStorage.setItem("posts",JSON.stringify(posts));
-renderPosts();
-};
-if(file){
-reader.readAsDataURL(file);
+if(imgFile){
+reader.readAsDataURL(imgFile);
 }else{
 reader.onload({target:{result:null}});
 }
 }
+
+function saveArticle(title, desc, img, pdf){
+articles.unshift({
+title:title,
+desc:desc,
+img:img,
+pdf:pdf
+});
+localStorage.setItem("journalArticles", JSON.stringify(articles));
+renderArticles();
 }
 
-function renderPosts(){
-let container=document.getElementById("posts");
+function renderArticles(){
+let container = document.getElementById("articles");
 container.innerHTML="";
-posts.forEach((post,index)=>{
-if(!post.private){
+
+articles.forEach(article=>{
 container.innerHTML+=`
-<div class="post">
-${post.private ? '<div class="privateTag">PRIVATE</div>' : ''}
-<h3>${post.title}</h3>
-<p>${post.content}</p>
-${post.file ? `<a class="fileLink" href="${post.file}" download>Faylni yuklab olish</a>` : ''}
-</div>`;
-}
+<div class="article">
+<h2>${article.title}</h2>
+<p>${article.desc}</p>
+${article.img ? `<img src="${article.img}">` : ""}
+${article.pdf ? `<a href="${article.pdf}" target="_blank">PDF ni ochish</a>` : ""}
+</div>
+`;
 });
 }
 
-function toggleTheme(){
-document.body.classList.toggle("light");
-}
-
-function academicMode(){
-document.getElementById("adminPanel").classList.toggle("hidden");
-}
+renderArticles();
 
 </script>
 
