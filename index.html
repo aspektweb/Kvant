@@ -3,112 +3,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Creative Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<title>Academic Creative Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
+
+:root{
+--bg1:#0f2027;
+--bg2:#203a43;
+--bg3:#2c5364;
+--card:rgba(255,255,255,0.08);
+--text:white;
+--accent:#00ffd5;
+}
+
+body.light{
+--bg1:#f5f7fa;
+--bg2:#e4ecf3;
+--bg3:#ffffff;
+--card:rgba(0,0,0,0.05);
+--text:#111;
+--accent:#0077ff;
+}
+
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
 body{
-background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
+background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+color:var(--text);
 min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
+padding:30px;
+transition:0.4s;
 }
+
 .container{
-width:90%;
-max-width:900px;
-background:rgba(255,255,255,0.08);
-backdrop-filter: blur(20px);
-border-radius:20px;
+max-width:1000px;
+margin:auto;
+background:var(--card);
+backdrop-filter:blur(20px);
 padding:40px;
-box-shadow:0 8px 32px rgba(0,0,0,0.4);
+border-radius:25px;
+box-shadow:0 8px 40px rgba(0,0,0,0.3);
 }
-h1{text-align:center;margin-bottom:20px;}
+
+h1{text-align:center;margin-bottom:10px;}
+.subtitle{text-align:center;opacity:0.8;margin-bottom:20px;}
+
 button{
-padding:10px 20px;
+padding:10px 18px;
 border:none;
-border-radius:10px;
+border-radius:12px;
 cursor:pointer;
-background:#00c6ff;
-color:black;
 font-weight:600;
 margin-top:10px;
+background:var(--accent);
 }
+
 input, textarea{
 width:100%;
-padding:10px;
+padding:12px;
 margin-top:10px;
-border-radius:10px;
+border-radius:12px;
 border:none;
 }
+
+textarea{min-height:100px;}
+
 .post{
 background:rgba(255,255,255,0.1);
-padding:15px;
-border-radius:15px;
+padding:20px;
+border-radius:18px;
 margin-top:15px;
+position:relative;
 }
+
+.privateTag{
+position:absolute;
+top:10px;
+right:15px;
+font-size:12px;
+color:red;
+}
+
+.stats{
+text-align:right;
+font-size:14px;
+opacity:0.7;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+margin-bottom:20px;
+}
+
 .hidden{display:none;}
-.toggle{
-float:right;
+
+.fileLink{
+display:block;
+margin-top:10px;
+color:var(--accent);
+text-decoration:none;
+}
+
+.modeSwitch{
 cursor:pointer;
 font-size:14px;
-color:#00ffd5;
+opacity:0.8;
 }
+
+.loginBox{
+max-width:400px;
+margin:100px auto;
+background:var(--card);
+padding:30px;
+border-radius:20px;
+text-align:center;
+}
+
 </style>
 </head>
 <body>
 
+<div id="loginPage" class="loginBox">
+<h2>Portfolio Login</h2>
+<input type="password" id="password" placeholder="Parol kiriting">
+<button onclick="login()">Kirish</button>
+</div>
+
+<div id="mainPage" class="hidden">
+
 <div class="container">
-<h1>Mening Ijodiy Portfolio</h1>
+
+<div class="topBar">
+<div>
+<h1>Mening Akademik Portfolio</h1>
+<div class="subtitle">Ijodiy ishlar va maqolalar</div>
+</div>
+<div>
+<span class="modeSwitch" onclick="toggleTheme()">Dark/Light</span>
+<br>
+<span class="modeSwitch" onclick="academicMode()">Academic Mode</span>
+</div>
+</div>
 
 <div id="adminPanel">
-<h3>Yangi maqola qo‘shish</h3>
+<h3>Yangi ish qo‘shish</h3>
 <input type="text" id="title" placeholder="Sarlavha">
-<textarea id="content" placeholder="Matn..."></textarea>
+<textarea id="content" placeholder="Tavsif yoki maqola matni"></textarea>
+<input type="file" id="fileUpload">
+<label><input type="checkbox" id="privateCheck"> Private</label>
 <button onclick="addPost()">Joylashtirish</button>
 </div>
 
-<hr style="margin:20px 0;opacity:0.3;">
+<hr style="margin:25px 0;opacity:0.3;">
 
 <div id="posts"></div>
+
+<div class="stats">
+Ko‘ruvchilar soni: <span id="views"></span>
+</div>
+
+</div>
 </div>
 
 <script>
-let posts=[];
+
+const PASSWORD="1234";
+
+let posts=JSON.parse(localStorage.getItem("posts"))||[];
+let views=localStorage.getItem("views")||0;
+views++;
+localStorage.setItem("views",views);
+
+document.getElementById("views").innerText=views;
+
+function login(){
+let input=document.getElementById("password").value;
+if(input===PASSWORD){
+document.getElementById("loginPage").classList.add("hidden");
+document.getElementById("mainPage").classList.remove("hidden");
+renderPosts();
+}else{
+alert("Noto‘g‘ri parol");
+}
+}
 
 function addPost(){
 let title=document.getElementById("title").value;
 let content=document.getElementById("content").value;
-if(title && content){
-posts.push({title,content,public:true});
-renderPosts();
-}
-}
+let file=document.getElementById("fileUpload").files[0];
+let isPrivate=document.getElementById("privateCheck").checked;
 
-function togglePrivacy(index){
-posts[index].public=!posts[index].public;
+if(title && content){
+let reader=new FileReader();
+reader.onload=function(e){
+posts.push({
+title,
+content,
+file:e.target.result || null,
+private:isPrivate
+});
+localStorage.setItem("posts",JSON.stringify(posts));
 renderPosts();
+};
+if(file){
+reader.readAsDataURL(file);
+}else{
+reader.onload({target:{result:null}});
+}
+}
 }
 
 function renderPosts(){
-let postsDiv=document.getElementById("posts");
-postsDiv.innerHTML="";
+let container=document.getElementById("posts");
+container.innerHTML="";
 posts.forEach((post,index)=>{
-if(post.public){
-postsDiv.innerHTML+=`
+if(!post.private){
+container.innerHTML+=`
 <div class="post">
-<h3>${post.title}
-<span class="toggle" onclick="togglePrivacy(${index})">
-${post.public ? "Public" : "Private"}
-</span>
-</h3>
+${post.private ? '<div class="privateTag">PRIVATE</div>' : ''}
+<h3>${post.title}</h3>
 <p>${post.content}</p>
+${post.file ? `<a class="fileLink" href="${post.file}" download>Faylni yuklab olish</a>` : ''}
 </div>`;
 }
 });
 }
+
+function toggleTheme(){
+document.body.classList.toggle("light");
+}
+
+function academicMode(){
+document.getElementById("adminPanel").classList.toggle("hidden");
+}
+
 </script>
 
 </body>
