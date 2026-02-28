@@ -3,232 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRO-PRESS | Milliy Digital Platforma</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-
+    <title>Mening Ijodiy Portfoliom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --brand-blue: #004a99;
-            --light-bg: #f9fafb;
-            --card-bg: #ffffff;
-            --text-dark: #111827;
-            --text-sub: #6b7280;
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            color: #f8fafc;
+            min-height: 100vh;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-        body { background: var(--light-bg); color: var(--text-dark); overflow-x: hidden; }
-
-        /* HEADER - TUGMASIZ VA TOZA */
-        header {
-            background: var(--card-bg);
-            border-bottom: 2px solid var(--brand-blue);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: center;
-            position: sticky; top: 0; z-index: 1000;
-        }
-        .logo { 
-            font-family: 'Playfair Display', serif; font-size: 2.2rem; 
-            color: var(--brand-blue); text-decoration: none; 
-            cursor: pointer; user-select: none; /* Adminni ochish uchun bu yer bosib turiladi */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
 
-        /* MAQOLA KARTASI - DARYO USLUBIDA */
-        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
-
-        .news-item {
-            background: var(--card-bg);
-            border-radius: 12px;
-            margin-bottom: 25px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.3);
         }
-        .news-img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            display: block;
-        }
-        .news-content { padding: 25px; }
-        .news-meta { font-size: 0.8rem; color: var(--brand-blue); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
-        .news-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.3; margin-bottom: 15px; color: #000; }
-        .news-excerpt { font-size: 1.1rem; color: var(--text-sub); line-height: 1.7; }
 
-        /* ADMIN TUGMALARI - FAQAT SIZ UCHUN */
-        .admin-controls { 
-            display: none; padding: 10px 25px; 
-            background: #fdf2f2; border-top: 1px solid #eee; 
-            justify-content: flex-end; gap: 10px;
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .btn-action { padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; border: none; font-size: 0.8rem; }
-        .btn-edit { background: #e3f2fd; color: #1976d2; }
-        .btn-del { background: #ffebee; color: #d32f2f; }
 
-        /* YASHIRIN ADMIN MODAL */
-        #admin-modal {
-            display: none; position: fixed; inset: 0; 
-            background: rgba(0,0,0,0.8); z-index: 2000;
-            justify-content: center; align-items: center; padding: 20px;
+        #loader {
+            border-top-color: #38bdf8;
+            animation: spinner 0.6s linear infinite;
         }
-        .modal-content { background: #fff; width: 100%; max-width: 500px; padding: 30px; border-radius: 15px; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
-        .btn-pub { width: 100%; padding: 15px; background: var(--brand-blue); color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        /* LOADER */
-        #loader { position: fixed; inset: 0; background: #fff; display: flex; align-items: center; justify-content: center; z-index: 3000; }
-        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--brand-blue); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
-<body>
+<body class="p-6 md:p-12">
 
-<div id="loader"><div class="spinner"></div></div>
+    <header class="max-w-6xl mx-auto mb-16 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
+            Mening <span class="gradient-text">Ijodiy Portfoliom</span>
+        </h1>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            Raqamli savodxonlik, ilmiy maqolalar va ijodiy loyihalar to'plami.
+        </p>
+    </header>
 
-<header>
-    <div class="logo" id="logo-trigger">PRO-PRESS</div>
-</header>
+    <main class="max-w-6xl mx-auto">
+        <div id="loading-state" class="flex justify-center items-center py-20">
+            <div id="loader" class="w-12 h-12 border-4 border-gray-700 rounded-full"></div>
+        </div>
 
-<div class="container" id="news-feed">
-    </div>
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
+            </div>
+    </main>
 
-<div id="admin-modal">
-    <div class="modal-content">
-        <h2 id="modal-title" style="margin-bottom: 20px;">Yangi nashr yaratish</h2>
-        <input type="hidden" id="edit-id">
-        <input type="text" id="inp-title" placeholder="Dolzarb sarlavhani kiriting...">
-        <textarea id="inp-body" rows="6" placeholder="Batafsil ma'lumot..."></textarea>
-        <input type="file" id="inp-file" accept="image/*" onchange="app.handleImg(this)">
-        <div id="preview-area"></div>
-        <button class="btn-pub" onclick="app.publish()">TIZIMGA NASHR ETISH</button>
-        <button onclick="app.closeAdmin()" style="margin-top:10px; background:none; border:none; color:red; cursor:pointer; width:100%;">Yopish</button>
-    </div>
-</div>
+    <footer class="max-w-6xl mx-auto mt-24 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 Barcha huquqlar himoyalangan. Portfolio tizimi SheetDB API orqali ishlaydi.</p>
+    </footer>
 
-<script>
-    const API = "https://sheetdb.io/api/v1/9vpxgyb4jfycs";
-    const PASS = "1997"; // Admin paroli
+    <script>
+        const API_URL = 'https://sheetdb.io/api/v1/9vpxgyb4jfycs';
 
-    const app = {
-        isAdmin: false,
-        imgData: "",
-        pressTimer: null,
-
-        init: function() {
-            // Invisible admin logikasi (Long Press - 5 sekund)
-            const trigger = document.getElementById('logo-trigger');
-            trigger.onmousedown = () => this.pressTimer = setTimeout(() => this.login(), 5000);
-            trigger.onmouseup = () => clearTimeout(this.pressTimer);
-            trigger.ontouchstart = () => this.pressTimer = setTimeout(() => this.login(), 5000);
-            trigger.ontouchend = () => clearTimeout(this.pressTimer);
-
-            this.load();
-        },
-
-        login: function() {
-            const p = prompt("Tizim kalitini kiriting:");
-            if(p === PASS) {
-                this.isAdmin = true;
-                document.getElementById('admin-modal').style.display = 'flex';
-                this.load(); // Admin tugmalari chiqishi uchun
-            } else { alert("Xato kalit!"); }
-        },
-
-        closeAdmin: function() { document.getElementById('admin-modal').style.display = 'none'; },
-
-        handleImg: function(input) {
-            const file = input.files[0];
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.src = e.target.result;
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const w = 1200; const h = img.height * (w / img.width);
-                    canvas.width = w; canvas.height = h;
-                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    this.imgData = canvas.toDataURL('image/jpeg', 0.8);
-                    document.getElementById('preview-area').innerHTML = `<img src="${this.imgData}" style="width:100%; border-radius:8px; margin-top:10px;">`;
-                }
-            };
-            reader.readAsDataURL(file);
-        },
-
-        publish: async function() {
-            const t = document.getElementById('inp-title').value;
-            const b = document.getElementById('inp-body').value;
-            const id = document.getElementById('edit-id').value;
-
-            if(!t || !b) return alert("Hamma ma'lumotni kiritilishi shart!");
-            document.getElementById('loader').style.display = 'flex';
-
-            if(id) { await fetch(`${API}/id/${id}`, { method: 'DELETE' }); }
-
-            const payload = { data: [{ 
-                id: id || new Date().getTime(), 
-                title: t, 
-                body: b, 
-                image: this.imgData, 
-                date: new Date().toLocaleDateString('uz-UZ') 
-            }] };
-            
-            await fetch(API, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(payload)
-            });
-
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            setTimeout(() => location.reload(), 1500);
-        },
-
-        load: async function() {
+        async function fetchWorks() {
             try {
-                const res = await fetch(API);
-                const data = await res.json();
-                const feed = document.getElementById('news-feed');
+                const response = await fetch(API_URL);
+                const data = await response.json();
                 
-                feed.innerHTML = data.reverse().map(p => `
-                    <div class="news-item">
-                        ${p.image ? `<img src="${p.image}" class="news-img" onerror="this.src='https://via.placeholder.com/800x400?text=Yuklanmoqda...'">` : ''}
-                        <div class="news-content">
-                            <span class="news-meta">📅 NASHR ETILDI • ${p.date || 'Bugun'}</span>
-                            <h2 class="news-title">${p.title}</h2>
-                            <p class="news-excerpt">${p.body}</p>
+                const grid = document.getElementById('portfolio-grid');
+                const loader = document.getElementById('loading-state');
+
+                grid.innerHTML = data.map(item => `
+                    <div class="glass-card rounded-3xl p-6 flex flex-col h-full">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-sky-500/10 text-sky-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                ${item.category || 'Maqola'}
+                            </span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-gray-500"></i>
                         </div>
-                        <div class="admin-controls" style="display: ${this.isAdmin ? 'flex' : 'none'}">
-                            <button class="btn-action btn-edit" onclick="app.editPrep('${p.id}', '${p.title}', '${encodeURIComponent(p.body)}', '${p.image}')">TAHRIRLASH</button>
-                            <button class="btn-action btn-del" onclick="app.deleteItem('${p.id}')">O'CHIRISH</button>
-                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white leading-tight">
+                            ${item.title}
+                        </h3>
+                        <p class="text-gray-400 text-sm mb-6 flex-grow">
+                            ${item.description || 'Ushbu ijodiy ish bo\'yicha qisqacha ma\'lumot hali qo\'shilmagan.'}
+                        </p>
+                        <a href="${item.link}" target="_blank" 
+                           class="inline-flex items-center justify-center w-full py-3 px-4 rounded-xl bg-white text-black font-semibold hover:bg-sky-400 hover:text-white transition-colors duration-300">
+                           Ko'rib chiqish
+                        </a>
                     </div>
                 `).join('');
-                document.getElementById('loader').style.display = 'none';
-            } catch (e) { console.error("API error"); }
-        },
 
-        editPrep: function(id, title, body, img) {
-            document.getElementById('admin-modal').style.display = 'flex';
-            document.getElementById('modal-title').innerText = "Tahrirlash";
-            document.getElementById('edit-id').value = id;
-            document.getElementById('inp-title').value = title;
-            document.getElementById('inp-body').value = decodeURIComponent(body);
-            this.imgData = img;
-            document.getElementById('preview-area').innerHTML = `<img src="${img}" style="width:100%; border-radius:8px; margin-top:10px;">`;
-        },
+                loader.classList.add('hidden');
+                grid.classList.remove('hidden');
 
-        deleteItem: async function(id) {
-            if(confirm("Ushbu xabarni tizimdan butunlay o'chirasizmi?")) {
-                document.getElementById('loader').style.display = 'flex';
-                await fetch(`${API}/id/${id}`, { method: 'DELETE' });
-                location.reload();
+            } catch (error) {
+                console.error('Xatolik:', error);
+                document.getElementById('loading-state').innerHTML = `<p class="text-red-400">Ma'lumot yuklashda xatolik yuz berdi.</p>`;
             }
         }
-    };
 
-    app.init();
-</script>
-
+        // Ma'lumotlarni yuklashni boshlash
+        fetchWorks();
+    </script>
 </body>
 </html>
