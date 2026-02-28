@@ -3,70 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRO-NEWS | Milliy Yangiliklar Portali</title>
+    <title>PRO-NEWS | Milliy Yangiliklar</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lora:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --main-blue: #004a99;
-            --accent-blue: #003366;
-            --bg-light: #f4f7f9;
-            --text-dark: #1a1a1a;
-            --text-gray: #666;
+            --kun-blue: #004a99;
+            --bg: #f2f4f7;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-sub: #555e67;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-        body { background: var(--bg-light); color: var(--text-dark); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background: var(--bg); color: var(--text-main); }
 
-        /* HEADER */
+        /* HEADER - TUGMASIZ VA TOZA */
         header {
-            background: #fff;
-            border-bottom: 3px solid var(--main-blue);
+            background: var(--card-bg);
+            border-bottom: 2px solid var(--kun-blue);
             padding: 15px 5%;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
             position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-        .logo { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--main-blue); font-weight: 700; text-decoration: none; }
-        
-        .admin-lock { cursor: pointer; font-size: 1.2rem; color: #ccc; transition: 0.3s; }
-        .admin-lock:hover { color: var(--main-blue); }
+        .logo { 
+            font-family: 'Lora', serif; font-size: 2.2rem; 
+            color: var(--kun-blue); text-decoration: none; 
+            cursor: pointer; user-select: none; /* Adminni ochish uchun bu yer bosib turiladi */
+        }
 
-        /* HERO SECTION */
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        
-        /* NEWS GRID */
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; margin-top: 30px; }
-        .news-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: 0.3s; border-bottom: 3px solid transparent; }
-        .news-card:hover { transform: translateY(-5px); border-color: var(--main-blue); }
-        .news-img { width: 100%; height: 220px; object-fit: cover; background: #eee; }
-        .news-body { padding: 20px; }
-        .news-date { font-size: 0.75rem; color: var(--main-blue); font-weight: 700; margin-bottom: 10px; display: block; }
-        .news-title { font-size: 1.25rem; font-weight: 700; line-height: 1.4; margin-bottom: 15px; cursor: pointer; }
-        .news-title:hover { color: var(--main-blue); }
+        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
 
-        /* ADMIN CONTROLS (ONLY FOR YOU) */
-        .admin-tools { display: none; gap: 10px; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #eee; }
-        .admin-tools.active { display: flex; }
-        .btn-tool { flex: 1; padding: 8px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
+        /* MAQOLA KARTASI - PROFESSIONAL STRUKTURA */
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .news-img { width: 100%; height: auto; display: block; object-fit: cover; max-height: 400px; }
+        
+        .news-content { padding: 20px; }
+        .news-meta { font-size: 0.8rem; color: var(--kun-blue); font-weight: bold; margin-bottom: 10px; display: block; }
+        .news-title { font-family: 'Lora', serif; font-size: 1.6rem; line-height: 1.3; margin-bottom: 12px; color: #000; }
+        .news-text { font-size: 1rem; color: var(--text-sub); line-height: 1.6; }
+
+        /* ADMIN TUGMALARI - FAQAT ADMIN UCHUN */
+        .admin-controls { 
+            display: none; padding: 10px 20px; 
+            background: #fdf2f2; border-top: 1px solid #eee; 
+            justify-content: flex-end; gap: 10px;
+        }
+        .btn { padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .btn-edit { background: #e3f2fd; color: #1976d2; }
         .btn-del { background: #ffebee; color: #d32f2f; }
 
-        /* CREATOR PANEL */
-        #creator-panel { display: none; background: #fff; padding: 30px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #ddd; }
-        #creator-panel.active { display: block; animation: slideDown 0.4s ease; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0 20px; border: 1px solid #ddd; border-radius: 6px; outline: none; }
-        .btn-pub { background: var(--main-blue); color: #fff; padding: 15px 30px; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; }
+        /* ADMIN MODAL */
+        #admin-panel {
+            display: none; position: fixed; inset: 0; 
+            background: rgba(0,0,0,0.8); z-index: 2000;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content { background: #fff; width: 100%; max-width: 500px; padding: 30px; border-radius: 15px; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+        .btn-save { width: 100%; padding: 15px; background: var(--kun-blue); color: #fff; border: none; border-radius: 8px; font-weight: bold; }
 
         /* LOADER */
-        #loader { position: fixed; inset: 0; background: #fff; z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--main-blue); border-radius: 50%; animation: spin 1s linear infinite; }
+        #loader { position: fixed; inset: 0; background: #fff; display: flex; align-items: center; justify-content: center; z-index: 3000; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--kun-blue); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -75,52 +82,56 @@
 <div id="loader"><div class="spinner"></div></div>
 
 <header>
-    <a href="#" class="logo">PRO-NEWS</a>
-    <div id="admin-login-btn" class="admin-lock" onclick="app.login()">🔐</div>
+    <div class="logo" id="logo-trigger">PRO-NEWS</div>
 </header>
 
-<div class="container">
-    
-    <div id="creator-panel">
-        <h2 style="margin-bottom: 20px;">Yangi maqola nashr etish</h2>
-        <input type="hidden" id="edit-id">
-        <input type="text" id="title" placeholder="Maqola sarlavhasi...">
-        <textarea id="body" rows="8" placeholder="Asosiy matnni kiriting..."></textarea>
-        <input type="file" id="file" onchange="app.handleImg(this)">
-        <div id="preview-area" style="margin-bottom: 20px;"></div>
-        <button class="btn-pub" onclick="app.publish()">NASHIR QILISH</button>
-        <button onclick="app.closePanel()" style="background:none; border:none; color:red; cursor:pointer; margin-left: 20px;">Bekor qilish</button>
+<div class="container" id="feed">
     </div>
 
-    <div id="feed" class="news-grid">
-        </div>
+<div id="admin-panel">
+    <div class="modal-content">
+        <h2 id="modal-title">Yangi maqola</h2>
+        <input type="hidden" id="edit-id">
+        <input type="text" id="inp-title" placeholder="Sarlavha">
+        <textarea id="inp-body" rows="5" placeholder="Maqola matni"></textarea>
+        <input type="file" id="inp-file" accept="image/*" onchange="app.handleImg(this)">
+        <div id="preview-area"></div>
+        <button class="btn-save" onclick="app.save()">NASHIR QILISH</button>
+        <button onclick="app.closeAdmin()" style="margin-top:10px; background:none; border:none; color:red; cursor:pointer; width:100%;">Yopish</button>
+    </div>
 </div>
 
 <script>
     const API = "https://sheetdb.io/api/v1/9vpxgyb4jfycs";
-    const SECRET_KEY = "1997"; // O'zingizga yoqqan parolni qo'ying
+    const PASS = "1997"; // Admin paroli
 
     const app = {
         isAdmin: false,
         imgData: "",
+        pressTimer: null,
 
-        // 1. ADMIN KIRISH (Parol so'rash)
+        init: function() {
+            // Yashirin adminni ochish logikasi (Long Press)
+            const trigger = document.getElementById('logo-trigger');
+            trigger.onmousedown = () => this.pressTimer = setTimeout(() => this.login(), 3000);
+            trigger.onmouseup = () => clearTimeout(this.pressTimer);
+            trigger.ontouchstart = () => this.pressTimer = setTimeout(() => this.login(), 3000);
+            trigger.ontouchend = () => clearTimeout(this.pressTimer);
+
+            this.load();
+        },
+
         login: function() {
-            const pass = prompt("Admin parolini kiriting:");
-            if(pass === SECRET_KEY) {
+            const p = prompt("Maxfiy parolni kiriting:");
+            if(p === PASS) {
                 this.isAdmin = true;
-                document.getElementById('creator-panel').classList.add('active');
-                this.load(); // Tugmalarni chiqarish uchun qayta yuklaydi
-                alert("Xush kelibsiz, Admin!");
-            } else {
-                alert("Parol noto'g'ri!");
+                document.getElementById('admin-panel').style.display = 'flex';
+                this.load(); // Admin tugmalari ko'rinishi uchun
             }
         },
 
-        closePanel: function() {
-            document.getElementById('creator-panel').classList.remove('active');
-            this.isAdmin = false;
-            this.load();
+        closeAdmin: function() {
+            document.getElementById('admin-panel').style.display = 'none';
         },
 
         handleImg: function(input) {
@@ -131,19 +142,19 @@
                 img.src = e.target.result;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const w = 800; const h = img.height * (w / img.width);
+                    const w = 1000; const h = img.height * (w / img.width);
                     canvas.width = w; canvas.height = h;
                     canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    this.imgData = canvas.toDataURL('image/jpeg', 0.7);
-                    document.getElementById('preview-area').innerHTML = `<img src="${this.imgData}" style="width:200px; border-radius:8px;">`;
+                    this.imgData = canvas.toDataURL('image/jpeg', 0.8);
+                    document.getElementById('preview-area').innerHTML = `<img src="${this.imgData}" style="width:100%; border-radius:8px; margin-top:10px;">`;
                 }
             };
             reader.readAsDataURL(file);
         },
 
-        publish: async function() {
-            const t = document.getElementById('title').value;
-            const b = document.getElementById('body').value;
+        save: async function() {
+            const t = document.getElementById('inp-title').value;
+            const b = document.getElementById('inp-body').value;
             const id = document.getElementById('edit-id').value;
 
             if(!t || !b) return alert("To'ldiring!");
@@ -151,7 +162,13 @@
 
             if(id) { await fetch(`${API}/id/${id}`, { method: 'DELETE' }); }
 
-            const payload = { data: [{ id: id || new Date().getTime(), title: t, body: b, image: this.imgData, date: new Date().toLocaleDateString() }] };
+            const payload = { data: [{ 
+                id: id || new Date().getTime(), 
+                title: t, 
+                body: b, 
+                image: this.imgData, 
+                date: new Date().toLocaleDateString() 
+            }] };
             
             await fetch(API, {
                 method: 'POST',
@@ -171,15 +188,14 @@
                 feed.innerHTML = data.reverse().map(p => `
                     <div class="news-card">
                         ${p.image ? `<img src="${p.image}" class="news-img">` : ''}
-                        <div class="news-body">
-                            <span class="news-date">📅 ${p.date || 'Bugun'}</span>
-                            <h2 class="news-title" onclick="alert(\`${p.body}\`)">${p.title}</h2>
-                            <p style="color:#555; font-size:0.9rem; line-height:1.6;">${p.body.substring(0, 120)}...</p>
-                            
-                            <div class="admin-tools ${this.isAdmin ? 'active' : ''}">
-                                <button class="btn-tool btn-edit" onclick="app.edit('${p.id}', '${p.title}', '${encodeURIComponent(p.body)}', '${p.image}')">Tahrirlash</button>
-                                <button class="btn-tool btn-del" onclick="app.del('${p.id}')">O'chirish</button>
-                            </div>
+                        <div class="news-content">
+                            <span class="news-meta">📅 ${p.date || 'Bugun'}</span>
+                            <h2 class="news-title">${p.title}</h2>
+                            <p class="news-text">${p.body}</p>
+                        </div>
+                        <div class="admin-controls" style="display: ${this.isAdmin ? 'flex' : 'none'}">
+                            <button class="btn btn-edit" onclick="app.edit('${p.id}', '${p.title}', '${encodeURIComponent(p.body)}', '${p.image}')">Tahrirlash</button>
+                            <button class="btn btn-del" onclick="app.del('${p.id}')">O'chirish</button>
                         </div>
                     </div>
                 `).join('');
@@ -188,15 +204,17 @@
         },
 
         edit: function(id, title, body, img) {
+            document.getElementById('admin-panel').style.display = 'flex';
+            document.getElementById('modal-title').innerText = "Tahrirlash";
             document.getElementById('edit-id').value = id;
-            document.getElementById('title').value = title;
-            document.getElementById('body').value = decodeURIComponent(body);
+            document.getElementById('inp-title').value = title;
+            document.getElementById('inp-body').value = decodeURIComponent(body);
             this.imgData = img;
-            window.scrollTo(0,0);
+            document.getElementById('preview-area').innerHTML = `<img src="${img}" style="width:100%; border-radius:8px; margin-top:10px;">`;
         },
 
         del: async function(id) {
-            if(confirm("Maqolani o'chirishni xohlaysizmi?")) {
+            if(confirm("Ushbu xabarni o'chirasizmi?")) {
                 document.getElementById('loader').style.display = 'flex';
                 await fetch(`${API}/id/${id}`, { method: 'DELETE' });
                 location.reload();
@@ -204,7 +222,7 @@
         }
     };
 
-    window.onload = () => app.load();
+    app.init();
 </script>
 
 </body>
