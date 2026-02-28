@@ -1,128 +1,152 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahror | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }
-        .serif { font-family: 'Playfair Display', serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        
-        /* Oynani qat'iy yashirish */
-        #adminPanel { 
-            display: none !important; 
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Oyna ochilgandagi holat */
-        #adminPanel.active { 
-            display: flex !important; 
-        }
-
-        .article-card:hover img { transform: scale(1.05); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ijodiy Portfolio</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Syne:wght@400;700&display=swap" rel="stylesheet"/>
 </head>
-<body class="p-6 md:p-12">
+<body>
 
-    <header class="max-w-6xl mx-auto text-center mb-20">
-        <h1 class="serif text-6xl text-white mb-4 tracking-tighter">Ahror<span class="text-blue-600">.</span></h1>
-        <p class="text-gray-500 tracking-[0.3em] uppercase text-[10px]">Raqamli Jurnalistika va Arxiv</p>
-    </header>
+<!-- ========== LOGIN SCREEN ========== -->
+<div id="page-login" class="page active">
+  <div class="login-bg">
+    <div class="grain"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+  </div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="logo-mark">✦</div>
+      <h1 class="login-title">Ijodiy <em>Portfolio</em></h1>
+      <p class="login-sub">Asarlaringizni saqlang. Examiner'larga ulashing.</p>
+      <div class="field">
+        <label>Foydalanuvchi nomi</label>
+        <input id="inp-user" type="text" placeholder="masalan: aziz_ijod" autocomplete="off"/>
+      </div>
+      <div class="field">
+        <label>Parol</label>
+        <input id="inp-pass" type="password" placeholder="••••••••"/>
+      </div>
+      <button class="btn-main" onclick="doLogin()">Kirish →</button>
+      <div class="divider">yoki</div>
+      <button class="btn-ghost" onclick="guestView()">Mehmon sifatida ko'rish</button>
+      <div class="tip">
+        💡 Examiner'ga faqat <strong>havola</strong> yuboring — ular joylashtira olmaydi, faqat ko'radi.
+      </div>
+    </div>
+  </div>
+</div>
 
-    <main id="gallery" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        </main>
+<!-- ========== ADMIN SCREEN ========== -->
+<div id="page-admin" class="page">
+  <header class="admin-bar">
+    <span class="admin-logo">✦ <span id="admin-username"></span></span>
+    <nav>
+      <button class="nav-btn active" id="btn-tab-upload" onclick="adminTab('upload')">Yuklash</button>
+      <button class="nav-btn" id="btn-tab-works" onclick="adminTab('works')">Asarlarim</button>
+      <button class="nav-btn" onclick="openPublic(true)">Ko'rinishi ↗</button>
+    </nav>
+    <button class="btn-exit" onclick="doLogout()">Chiqish</button>
+  </header>
 
-    <div id="adminPanel">
-        <div class="glass p-10 rounded-[40px] max-w-md w-full mx-4 shadow-2xl">
-            <h2 class="serif text-3xl mb-8 text-white text-center">Yangi Material</h2>
-            <input type="text" id="m_title" placeholder="Sarlavha" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 outline-none focus:border-blue-500 text-white">
-            <input type="text" id="m_img" placeholder="Rasm Linki" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 outline-none focus:border-blue-500 text-white">
-            <textarea id="m_desc" placeholder="Maqola matni..." class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-6 outline-none focus:border-blue-500 text-white h-32"></textarea>
-            
-            <div class="flex gap-3">
-                <button onclick="saveData()" class="flex-1 bg-blue-600 hover:bg-blue-500 p-4 rounded-2xl font-bold text-black transition-all">Saqlash</button>
-                <button onclick="closeAdmin()" class="bg-white/10 hover:bg-white/20 text-white px-6 rounded-2xl transition-all">X</button>
-            </div>
-        </div>
+  <main class="admin-main">
+
+    <!-- SHARE BANNER -->
+    <div class="share-banner">
+      <div>
+        <div class="share-label">📎 Examiner uchun havola</div>
+        <div class="share-desc">Quyidagi havolani nusxalab examiner'ga yuboring</div>
+      </div>
+      <div class="share-url-box" id="share-url-box" onclick="copyShareLink()">
+        <span id="share-url-text">—</span>
+        <span class="copy-icon">⎘</span>
+      </div>
     </div>
 
-    <footer class="mt-32 text-center text-gray-700">
-        <p class="text-[10px] tracking-widest uppercase">
-            © <span id="secretTrigger" class="cursor-pointer hover:text-gray-500 transition-all">2026</span> Barcha huquqlar himoyalangan.
-        </p>
-    </footer>
+    <!-- UPLOAD TAB -->
+    <section id="tab-upload">
+      <h2 class="sec-title">Yangi asar qo'shish</h2>
 
-    <script>
-        // Ma'lumotlar bazasi
-        let database = JSON.parse(localStorage.getItem('journal_db')) || [
-            {
-                title: "Namuna: Jurnalistika bugun",
-                img: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1000",
-                desc: "Bu yerda sizning maqolalaringiz chiqadi. Admin paneldan yangilarini qo'shishingiz mumkin."
-            }
-        ];
+      <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-inp').click()">
+        <div class="drop-icon">⬆</div>
+        <p>Fayl tanlang yoki bu yerga tashlang</p>
+        <span>Rasm · PDF · Audio · Video · Har qanday format</span>
+        <input type="file" id="file-inp" style="display:none" onchange="onFileSelect(event)"/>
+      </div>
 
-        function renderGallery() {
-            const gallery = document.getElementById('gallery');
-            gallery.innerHTML = database.map((item) => `
-                <div class="article-card glass rounded-[35px] overflow-hidden p-5 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                    <div class="h-80 bg-black rounded-[25px] mb-6 overflow-hidden">
-                        <img src="${item.img}" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="serif text-2xl text-white mb-3 leading-tight">${item.title}</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">${item.desc}</p>
-                </div>
-            `).join('');
-        }
+      <div class="meta-panel" id="meta-panel">
+        <h3>Ma'lumot kiriting</h3>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Asar nomi</label>
+            <input type="text" id="f-title" placeholder="She'r, maqola, rasm..."/>
+          </div>
+          <div class="form-field">
+            <label>Toifa</label>
+            <select id="f-cat">
+              <option>Maqola</option>
+              <option>She'riyat</option>
+              <option>Rasm</option>
+              <option>Fotografiya</option>
+              <option>Musiqa</option>
+              <option>Video</option>
+              <option>Boshqa</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Tavsif (ixtiyoriy)</label>
+          <textarea id="f-desc" placeholder="Bu asar haqida..."></textarea>
+        </div>
+        <button class="btn-main" onclick="publishWork()">✦ Nashr etish</button>
+      </div>
+    </section>
 
-        // MAXFIY KIRISH: 5 marta tez-tez bosilsa ochiladi
-        let clicks = 0;
-        let lastClick = 0;
-        document.getElementById('secretTrigger').addEventListener('click', () => {
-            const time = new Date().getTime();
-            if (time - lastClick > 500) clicks = 0; // Agar sekin bossa hisoblamaydi
-            clicks++;
-            lastClick = time;
+    <!-- WORKS TAB -->
+    <section id="tab-works" style="display:none">
+      <h2 class="sec-title">Mening asarlarim</h2>
+      <div class="works-grid" id="admin-grid"></div>
+    </section>
 
-            if (clicks === 5) {
-                let pass = prompt("Kirish uchun maxfiy kod:");
-                if (pass === "ahror777") { // Parolni shu yerda o'zgartiring
-                    document.getElementById('adminPanel').classList.add('active');
-                }
-                clicks = 0;
-            }
-        });
+  </main>
+</div>
 
-        function closeAdmin() {
-            document.getElementById('adminPanel').classList.remove('active');
-        }
+<!-- ========== PUBLIC SCREEN ========== -->
+<div id="page-public" class="page">
+  <div class="pub-bg">
+    <div class="grain"></div>
+  </div>
+  <header class="pub-header">
+    <div class="pub-logo">✦ <span id="pub-name">Portfolio</span></div>
+    <button class="btn-back" id="btn-back" style="display:none" onclick="goBack()">← Orqaga</button>
+  </header>
 
-        function saveData() {
-            const title = document.getElementById('m_title').value;
-            const img = document.getElementById('m_img').value;
-            const desc = document.getElementById('m_desc').value;
+  <div class="pub-hero">
+    <div class="pub-hero-label">Ijodiy asarlar</div>
+    <h1 class="pub-hero-title">Har bir asar —<br/><em>yangi bir olam</em></h1>
+  </div>
 
-            if(title && img) {
-                database.unshift({title, img, desc});
-                localStorage.setItem('journal_db', JSON.stringify(database));
-                renderGallery();
-                closeAdmin();
-                // Formani tozalash
-                document.getElementById('m_title').value = '';
-                document.getElementById('m_img').value = '';
-                document.getElementById('m_desc').value = '';
-            }
-        }
+  <div class="pub-filters" id="pub-filters"></div>
 
-        renderGallery();
-    </script>
+  <div class="pub-grid" id="pub-grid"></div>
+</div>
+
+<!-- ========== MODAL ========== -->
+<div class="modal-bg" id="modal-bg" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-cat" id="m-cat"></div>
+    <h2 class="modal-title" id="m-title"></h2>
+    <div id="m-media"></div>
+    <p class="modal-desc" id="m-desc"></p>
+  </div>
+</div>
+
+<!-- ========== TOAST ========== -->
+<div class="toast" id="toast"></div>
+
+<script src="js/app.js"></script>
 </body>
 </html>
