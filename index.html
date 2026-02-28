@@ -1,237 +1,161 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neon Press - Multimedia Edition</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #020205;
-    --neon-cyan: #00f2ff;
-    --neon-pink: #ff00ff;
-    --neon-green: #39ff14;
-    --glass: rgba(255, 255, 255, 0.03);
-    --border: rgba(0, 242, 255, 0.2);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Cloud Press</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #00f2ff; --pink: #ff00ff; --bg: #020205; }
+        * { box-sizing: border-box; }
+        body { background: var(--bg); color: #fff; font-family: 'Exo 2', sans-serif; margin: 0; padding: 20px; }
+        
+        /* Design Elements */
+        .container { max-width: 600px; margin: 0 auto; }
+        .header { font-family: 'Orbitron'; color: var(--neon); text-align: center; text-shadow: 0 0 10px var(--neon); margin-bottom: 30px; }
+        
+        .card { background: rgba(255,255,255,0.03); border: 1px solid var(--neon); padding: 20px; border-radius: 10px; margin-bottom: 25px; box-shadow: 0 0 15px rgba(0,242,255,0.1); }
+        
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: #fff; border-radius: 5px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--neon); box-shadow: 0 0 10px var(--neon); }
+        
+        .btn { width: 100%; padding: 15px; background: var(--neon); border: none; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn:hover { background: #fff; box-shadow: 0 0 20px var(--neon); }
+        .btn:disabled { background: #444; cursor: not-allowed; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Exo 2', sans-serif; background: var(--bg); color: #fff; min-height: 100vh; overflow-x: hidden; }
-
-  /* Neon Grid Background */
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 50px 50px; z-index: -1; opacity: 0.15;
-  }
-
-  .screen { display: none; padding: 20px; animation: glow-in 0.5s ease; }
-  .screen.active { display: block; }
-  @keyframes glow-in { from { opacity: 0; filter: blur(10px); } to { opacity: 1; filter: blur(0); } }
-
-  .neon-box {
-    background: rgba(0, 0, 0, 0.9); border: 2px solid var(--neon-cyan);
-    box-shadow: 0 0 20px var(--neon-cyan); padding: 40px; border-radius: 5px;
-    width: 100%; max-width: 400px; text-align: center; margin: 10vh auto;
-  }
-
-  h1.logo { font-family: 'Orbitron', sans-serif; color: var(--neon-cyan); text-shadow: 0 0 15px var(--neon-cyan); margin-bottom: 25px; }
-
-  input, textarea, select {
-    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--neon-cyan);
-    padding: 12px; color: #fff; margin-bottom: 15px; outline: none;
-  }
-
-  .btn {
-    width: 100%; padding: 15px; background: var(--neon-cyan); border: none;
-    color: #000; font-weight: bold; font-family: 'Orbitron', sans-serif;
-    cursor: pointer; transition: 0.3s; text-transform: uppercase;
-  }
-  .btn:hover { background: transparent; color: var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan); border: 1px solid var(--neon-cyan); }
-  .btn-alt { border: 1px solid var(--neon-pink); color: var(--neon-pink); background: transparent; margin-top: 10px; }
-
-  /* Admin Layout */
-  .header { border-bottom: 2px solid var(--neon-cyan); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: #000; }
-  .main-grid { display: grid; grid-template-columns: 350px 1fr; gap: 30px; padding: 30px 5%; }
-
-  .article-card {
-    background: var(--glass); border: 1px solid var(--border); padding: 15px;
-    margin-bottom: 15px; cursor: pointer; transition: 0.3s; overflow: hidden;
-  }
-  .article-card:hover { border-color: var(--neon-cyan); transform: translateY(-5px); }
-  .card-img-sm { width: 100%; height: 100px; object-fit: cover; margin-bottom: 10px; border: 1px solid var(--border); }
-  .card-cat { color: var(--neon-pink); font-size: 11px; font-weight: bold; letter-spacing: 1px; }
-
-  /* Reader Modal */
-  .reader-modal { position: fixed; inset: 0; background: #000; z-index: 2000; display: none; padding: 40px 10%; overflow-y: auto; }
-  .reader-modal.active { display: block; }
-  .full-img { width: 100%; max-height: 450px; object-fit: contain; margin: 20px 0; border: 1px solid var(--neon-cyan); box-shadow: 0 0 20px rgba(0,242,255,0.2); }
-
-  #image-preview { width: 100%; height: 120px; border: 1px dashed var(--neon-pink); margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  #image-preview img { width: 100%; height: 100%; object-fit: cover; }
-
-  @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
-</style>
+        /* Post Display */
+        .post { background: #08080a; border-left: 4px solid var(--pink); padding: 15px; margin-bottom: 20px; animation: slideIn 0.5s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .post h3 { margin: 0; color: var(--neon); font-family: 'Orbitron'; font-size: 1.1rem; }
+        .post p { line-height: 1.6; white-space: pre-wrap; color: #ccc; }
+        .post img { width: 100%; border-radius: 5px; margin-top: 10px; border: 1px solid #222; }
+        
+        #status { text-align: center; font-size: 0.8rem; color: var(--pink); margin-bottom: 10px; display: none; }
+        #preview-img { width: 100%; height: 150px; border: 1px dashed #333; margin: 10px 0; display: flex; align-items:center; justify-content:center; overflow:hidden; }
+        #preview-img img { width: 100%; height: 100%; object-fit: cover; }
+    </style>
 </head>
 <body>
 
-<div id="screen-login" class="screen active">
-    <div class="neon-box">
-      <h1 class="logo">NEON PRESS</h1>
-      <input type="text" id="user-input" placeholder="FOYDALANUVCHI NOMI">
-      <button class="btn" onclick="app.login()">ADMIN KIRISH</button>
-      <button class="btn btn-alt" onclick="app.viewPublic()">MEHMON REJIMI</button>
-    </div>
-</div>
+<div class="container">
+    <h1 class="header">NEON DATABASE</h1>
 
-<div id="screen-admin" class="screen">
-  <div class="header">
-    <h2 class="logo" style="font-size: 1rem; margin:0;">STATION: ADMIN</h2>
-    <button class="btn btn-alt" style="width:auto; padding: 5px 15px; margin:0;" onclick="location.reload()">CHIQISH</button>
-  </div>
-  
-  <div class="main-grid">
-    <div class="editor">
-      <h3 style="color: var(--neon-green); margin-bottom: 15px;">YANGI POST</h3>
-      <input type="text" id="post-title" placeholder="SARLAVHA">
-      <select id="post-cat">
-        <option value="MAQOLA">MAQOLA</option>
-        <option value="INTERVYU">INTERVYU</option>
-        <option value="REPORTAJ">REPORTAJ</option>
-      </select>
-      
-      <label style="font-size: 12px; color: var(--neon-cyan);">RASM YUKLASH:</label>
-      <input type="file" id="post-file" accept="image/*" onchange="app.previewImage(this)">
-      <div id="image-preview"> <span style="color: #444;">Rasm tanlanmagan</span> </div>
+    <div class="card">
+        <h3 style="margin-top:0; font-size:0.9rem; color:var(--pink)">[ YANGI MATERIYAL ]</h3>
+        <input type="text" id="title" placeholder="Sarlavha...">
+        <textarea id="body" rows="4" placeholder="Maqola matni..."></textarea>
+        
+        <label style="font-size: 12px; color: var(--neon);">RASM YUKLASH:</label>
+        <input type="file" id="file" accept="image/*" onchange="app.preview(this)">
+        <div id="preview-img"><small style="color:#444">Rasm tanlanmagan</small></div>
+        
+        <div id="status">Baza yangilanmoqda...</div>
+        <button class="btn" id="saveBtn" onclick="app.save()">BULUTGA SAQLASH</button>
+    </div>
 
-      <textarea id="post-body" rows="8" placeholder="MATN..."></textarea>
-      <button class="btn" onclick="app.save()">TIZIMGA SAQLASH</button>
-    </div>
-    
-    <div class="feed">
-      <h3 style="margin-bottom: 15px;">ARXIV</h3>
-      <div id="admin-feed"></div>
-    </div>
-  </div>
-</div>
-
-<div id="screen-public" class="screen">
-    <div class="header">
-        <h1 class="logo" style="font-size: 1.2rem; margin:0;">MULTIMEDIA FEED</h1>
-        <button class="btn" style="width:auto; padding: 5px 20px;" onclick="location.reload()">ASOSIY</button>
-    </div>
-    <div style="max-width: 900px; margin: 30px auto;" id="public-feed" class="main-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));"></div>
-</div>
-
-<div id="reader" class="reader-modal">
-    <button class="btn btn-alt" style="width:auto; float:right;" onclick="app.closeRead()">YOPISH</button>
-    <div style="max-width: 800px; margin: 40px auto; clear:both;">
-        <span id="read-cat" class="card-cat"></span>
-        <h1 id="read-title" class="logo" style="text-align:left; margin-top:10px;"></h1>
-        <img id="read-img" class="full-img" src="" style="display:none;">
-        <div id="read-body" style="font-size: 1.1rem; line-height: 1.8; white-space: pre-wrap; margin-top:20px;"></div>
-    </div>
+    <h2 style="font-family:'Orbitron'; font-size:1.2rem; border-bottom:1px solid #222; padding-bottom:10px;">ARXIV</h2>
+    <div id="feed">Yuklanmoqda...</div>
 </div>
 
 <script>
-const app = {
-    db: JSON.parse(localStorage.getItem('neon_multimedia') || '[]'),
-    tempImg: "",
+    // Siz yaratgan SheetDB API havolasi
+    const DATABASE_URL = "https://sheetdb.io/api/v1/9vpxgyb4jfycs";
 
-    previewImage: function(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                this.tempImg = e.target.result;
-                document.getElementById('image-preview').innerHTML = `<img src="${e.target.result}">`;
+    const app = {
+        base64Image: "",
+
+        // Rasmni preview qilish va siqish
+        preview: function(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const maxW = 500;
+                        const scale = maxW / img.width;
+                        canvas.width = maxW;
+                        canvas.height = img.height * scale;
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        this.base64Image = canvas.toDataURL('image/jpeg', 0.6);
+                        document.getElementById('preview-img').innerHTML = `<img src="${this.base64Image}">`;
+                    };
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        },
+
+        // Ma'lumotni Google Sheetsga yuborish
+        save: async function() {
+            const t = document.getElementById('title').value;
+            const b = document.getElementById('body').value;
+            if(!t || !b) return alert("Sarlavha va matnni yozing!");
+
+            const btn = document.getElementById('saveBtn');
+            const status = document.getElementById('status');
+            
+            btn.disabled = true;
+            status.style.display = 'block';
+
+            // SheetDB formatida ma'lumot tuzilmasi
+            const payload = {
+                data: [{
+                    id: new Date().toLocaleString(),
+                    title: t,
+                    body: b,
+                    image: this.base64Image
+                }]
             };
-            reader.readAsDataURL(input.files[0]);
+
+            try {
+                const response = await fetch(DATABASE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if(response.ok) {
+                    alert("Ma'lumot bazaga muvaffaqiyatli qo'shildi!");
+                    location.reload();
+                }
+            } catch (error) {
+                alert("Xatolik yuz berdi. Internetni tekshiring.");
+                btn.disabled = false;
+                status.style.display = 'none';
+            }
+        },
+
+        // Ma'lumotlarni bazadan o'qib olish
+        load: async function() {
+            const feed = document.getElementById('feed');
+            try {
+                const res = await fetch(DATABASE_URL);
+                const data = await res.json();
+                
+                if(data.length === 0) {
+                    feed.innerHTML = "Hozircha bazada ma'lumot yo'q.";
+                    return;
+                }
+
+                feed.innerHTML = data.reverse().map(item => `
+                    <div class="post">
+                        <h3>${item.title}</h3>
+                        <small style="color:#444; font-size:10px;">${item.id}</small>
+                        ${item.image ? `<img src="${item.image}">` : ''}
+                        <p>${item.body}</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                feed.innerHTML = "Bazaga ulanishda xatolik yuz berdi.";
+            }
         }
-    },
+    };
 
-    save: function() {
-        const title = document.getElementById('post-title').value;
-        const cat = document.getElementById('post-cat').value;
-        const body = document.getElementById('post-body').value;
-
-        if(!title || !body) return alert("Sarlavha va matn shart!");
-
-        const entry = {
-            id: Date.now(),
-            title, cat, body,
-            image: this.tempImg,
-            date: new Date().toLocaleDateString()
-        };
-
-        this.db.unshift(entry);
-        localStorage.setItem('neon_multimedia', JSON.stringify(this.db));
-        this.render();
-        
-        // Reset
-        document.getElementById('post-title').value = '';
-        document.getElementById('post-body').value = '';
-        document.getElementById('post-file').value = '';
-        document.getElementById('image-preview').innerHTML = '<span>Rasm tanlanmagan</span>';
-        this.tempImg = "";
-        alert("Muvaffaqiyatli saqlandi!");
-    },
-
-    render: function() {
-        const adminFeed = document.getElementById('admin-feed');
-        const publicFeed = document.getElementById('public-feed');
-        
-        const html = this.db.map(item => `
-            <div class="article-card" onclick="app.read(${item.id})">
-                ${item.image ? `<img src="${item.image}" class="card-img-sm">` : ''}
-                <span class="card-cat">${item.cat}</span>
-                <h3 class="card-title" style="font-size:1rem;">${item.title}</h3>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <small style="color:#555;">${item.date}</small>
-                    <button onclick="app.delete(${item.id}, event)" style="background:none; border:none; color:var(--neon-pink); cursor:pointer; font-size:10px;">O'CHIRISH</button>
-                </div>
-            </div>
-        `).join('');
-
-        if(adminFeed) adminFeed.innerHTML = html;
-        if(publicFeed) publicFeed.innerHTML = html;
-    },
-
-    read: function(id) {
-        const item = this.db.find(i => i.id === id);
-        document.getElementById('read-cat').innerText = item.cat;
-        document.getElementById('read-title').innerText = item.title;
-        document.getElementById('read-body').innerText = item.body;
-        
-        const img = document.getElementById('read-img');
-        if(item.image) {
-            img.src = item.image;
-            img.style.display = 'block';
-        } else {
-            img.style.display = 'none';
-        }
-        
-        document.getElementById('reader').classList.add('active');
-    },
-
-    delete: function(id, e) {
-        e.stopPropagation();
-        if(confirm("Ushbu material arxivdan o'chirilsinmi?")) {
-            this.db = this.db.filter(i => i.id !== id);
-            localStorage.setItem('neon_multimedia', JSON.stringify(this.db));
-            this.render();
-        }
-    },
-
-    login: function() { this.switch('screen-admin'); this.render(); },
-    viewPublic: function() { this.switch('screen-public'); this.render(); },
-    switch: function(id) { 
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-    },
-    closeRead: function() { document.getElementById('reader').classList.remove('active'); }
-};
-
-app.render();
+    // Sahifa yuklanganda ma'lumotlarni olib kelish
+    app.load();
 </script>
+
 </body>
 </html>
