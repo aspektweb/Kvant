@@ -3,157 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRO-NEWS | Milliy Portal</title>
+    <title>PRO-PRESS | Professional News Portal</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Lora:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-blue: #004a99;
-            --secondary-blue: #003366;
-            --accent: #f97316;
-            --bg: #f0f2f5;
-            --text: #1f2937;
+            --main-blue: #004a99;
+            --dark-blue: #003366;
+            --light-bg: #f2f4f7;
+            --white: #ffffff;
+            --gray-text: #555e67;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-        body { background: var(--bg); color: var(--text); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Ubuntu', sans-serif; }
+        body { background-color: var(--light-bg); color: #1a1a1a; }
 
-        /* HEADER */
-        header {
-            background: #fff;
-            padding: 20px 5%;
-            border-bottom: 4px solid var(--primary-blue);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky; top: 0; z-index: 1000;
-        }
-        .logo { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--primary-blue); font-weight: 700; text-decoration: none; }
+        /* HEADER & NAVIGATION */
+        header { background: var(--main-blue); color: white; padding: 15px 5%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 1000; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Lora', serif; font-size: 2rem; color: white; text-decoration: none; font-weight: bold; }
         
-        .admin-btn { 
-            background: var(--primary-blue); color: white; padding: 10px 20px; 
-            border-radius: 5px; border: none; cursor: pointer; font-weight: bold;
-        }
+        .nav-cats { display: flex; gap: 20px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; overflow-x: auto; }
+        .nav-cats a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: bold; white-space: nowrap; }
+        .nav-cats a:hover { color: white; }
 
-        /* ADMIN PANEL - DOIMO KO'RINARLI */
-        #admin-panel {
-            background: #fff; margin: 20px auto; max-width: 800px; padding: 25px;
-            border-radius: 12px; border: 1px solid #ddd; display: none;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px;
-        }
-        .submit-btn { background: var(--accent); color: white; border: none; padding: 15px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        /* ADMIN CONTROL BUTTON */
+        .admin-trigger { background: var(--dark-blue); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
 
-        /* NEWS FEED */
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        /* MAIN CONTAINER */
+        .container { max-width: 1100px; margin: 20px auto; display: grid; grid-template-columns: 2fr 1fr; gap: 25px; padding: 0 15px; }
+
+        /* NEWS CARDS */
+        .news-list { display: flex; flex-direction: column; gap: 25px; }
+        .news-card { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
         
-        .card {
-            background: #fff; margin-bottom: 30px; border-radius: 12px; overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: 0.3s;
-        }
-        .card:hover { transform: translateY(-5px); }
+        /* RASM JADVALI */
+        .img-box { width: 100%; height: 400px; background: #ddd; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .img-box img:hover { transform: scale(1.02); }
 
-        /* RASM STRUKTURASI */
-        .card-img {
-            width: 100%;
-            height: 400px; /* Rasm balandligi */
-            object-fit: cover; /* Rasmni buzmasdan sig'dirish */
-            background: #e5e7eb;
-            display: block;
-        }
-        
-        .card-content { padding: 25px; }
-        .card-date { color: var(--primary-blue); font-weight: bold; font-size: 0.85rem; margin-bottom: 10px; display: block; }
-        .card-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 15px; color: #000; line-height: 1.2; }
-        .card-text { font-size: 1.05rem; color: #4b5563; line-height: 1.6; }
+        .content-box { padding: 25px; }
+        .badge { background: var(--main-blue); color: white; padding: 4px 10px; border-radius: 3px; font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; display: inline-block; }
+        .news-card h2 { font-family: 'Lora', serif; font-size: 1.8rem; margin-bottom: 15px; line-height: 1.3; color: #000; }
+        .news-card p { color: var(--gray-text); line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px; }
 
-        /* ADMIN TOOLS */
-        .admin-actions {
-            padding: 15px 25px; background: #f9fafb; border-top: 1px solid #eee;
-            display: none; gap: 10px;
-        }
-        .btn-edit { background: #dbeafe; color: #1e40af; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
-        .btn-del { background: #fee2e2; color: #b91c1c; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
+        /* ADMIN PANEL DRAWER */
+        #admin-panel { display: none; background: #fff; padding: 25px; border-radius: 8px; margin-bottom: 30px; border: 2px solid var(--main-blue); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; outline: none; }
+        .btn-send { background: #22c55e; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
-        #loading { position: fixed; inset: 0; background: rgba(255,255,255,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        /* SIDEBAR */
+        aside { background: var(--white); padding: 20px; border-radius: 8px; height: fit-content; }
+        aside h3 { border-bottom: 2px solid var(--main-blue); padding-bottom: 10px; margin-bottom: 15px; }
+        .side-item { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; font-weight: bold; color: #333; cursor: pointer; }
+
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+            .img-box { height: 250px; }
+        }
     </style>
 </head>
 <body>
 
-<div id="loading"><b>Yuklanmoqda...</b></div>
-
 <header>
-    <a href="#" class="logo">PRO-NEWS</a>
-    <button class="admin-btn" onclick="app.showAdmin()">ADMIN PANEL ⚙️</button>
+    <div class="header-top">
+        <a href="#" class="logo">PRO-PRESS</a>
+        <button class="admin-trigger" onclick="app.checkAdmin()">PANEL ⚙️</button>
+    </div>
+    <div class="nav-cats">
+        <a href="#">BOSH SAHIFA</a>
+        <a href="#">SIYOSAT</a>
+        <a href="#">IQTISODIYOT</a>
+        <a href="#">JAMIYAT</a>
+        <a href="#">TEXNOLOGIYA</a>
+        <a href="#">SPORT</a>
+    </div>
 </header>
 
 <div class="container">
-    <div id="admin-panel">
-        <h2 style="margin-bottom: 15px;">Yangilik Qo'shish / Tahrirlash</h2>
-        <div class="form-group">
-            <input type="hidden" id="edit-id">
-            <input type="text" id="inp-title" placeholder="Sarlavha">
-            <textarea id="inp-body" rows="6" placeholder="Batafsil ma'lumot..."></textarea>
-            <input type="file" id="inp-file" accept="image/*" onchange="app.upload(this)">
-            <div id="prev-img" style="margin-bottom:15px"></div>
-            <button class="submit-btn" onclick="app.save()">NASHIR ETISH</button>
+    <div class="news-list">
+        <div id="admin-panel">
+            <h2 style="margin-bottom: 15px;">Yangi nashr yaratish</h2>
+            <div class="form-row">
+                <input type="text" id="p-title" placeholder="Maqola sarlavhasi">
+                <select id="p-cat">
+                    <option value="Siyosat">Siyosat</option>
+                    <option value="Iqtisodiyot">Iqtisodiyot</option>
+                    <option value="Texnologiya">Texnologiya</option>
+                    <option value="Sport">Sport</option>
+                </select>
+            </div>
+            <textarea id="p-body" rows="6" placeholder="Batafsil ma'lumot..."></textarea>
+            <input type="file" id="p-file" accept="image/*" onchange="app.previewImg(this)">
+            <div id="img-feedback"></div>
+            <button class="btn-send" onclick="app.publish()">NASHIR QILISH</button>
         </div>
+
+        <div id="feed-box"></div>
     </div>
 
-    <div id="feed"></div>
+    <aside>
+        <h3>Eng so'nggi xabarlar</h3>
+        <div id="side-news"></div>
+    </aside>
 </div>
 
 <script>
-    const API_URL = "https://sheetdb.io/api/v1/9vpxgyb4jfycs";
+    const API = "https://sheetdb.io/api/v1/9vpxgyb4jfycs";
     const PASS = "1997";
 
     const app = {
         isMod: false,
-        currentImg: "",
+        imgData: "",
 
-        showAdmin: function() {
-            const p = prompt("Parol:");
+        checkAdmin: function() {
+            const p = prompt("Admin parolini kiriting:");
             if(p === PASS) {
                 this.isMod = true;
                 document.getElementById('admin-panel').style.display = 'block';
-                document.querySelectorAll('.admin-actions').forEach(el => el.style.display = 'flex');
+                this.load();
             }
         },
 
-        upload: function(input) {
+        previewImg: function(input) {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = new Image();
                 img.src = e.target.result;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const w = 1200; 
+                    const w = 1200; // Professional sifat uchun kenglik
                     const h = img.height * (w / img.width);
                     canvas.width = w; canvas.height = h;
                     canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    this.currentImg = canvas.toDataURL('image/jpeg', 0.8);
-                    document.getElementById('prev-img').innerHTML = `<img src="${this.currentImg}" style="width:100px; border-radius:5px;">`;
+                    this.imgData = canvas.toDataURL('image/jpeg', 0.8);
+                    document.getElementById('img-feedback').innerHTML = `<p style="color:green">Rasm tayyor!</p>`;
                 }
-            }
+            };
             reader.readAsDataURL(input.files[0]);
         },
 
-        save: async function() {
-            const t = document.getElementById('inp-title').value;
-            const b = document.getElementById('inp-body').value;
-            const id = document.getElementById('edit-id').value;
+        publish: async function() {
+            const t = document.getElementById('p-title').value;
+            const b = document.getElementById('p-body').value;
+            const c = document.getElementById('p-cat').value;
 
-            if(!t || !b) return alert("To'ldiring!");
-            document.getElementById('loading').style.display = 'flex';
+            if(!t || !b || !this.imgData) return alert("Ma'lumotlar va rasm to'liq emas!");
 
-            if(id) { await fetch(`${API_URL}/id/${id}`, { method: 'DELETE' }); }
+            const payload = { 
+                data: [{ 
+                    id: Date.now(), 
+                    title: t, 
+                    body: b, 
+                    category: c,
+                    image: this.imgData, 
+                    date: new Date().toLocaleDateString('uz-UZ') 
+                }] 
+            };
 
-            const payload = { data: [{ id: id || Date.now(), title: t, body: b, image: this.currentImg, date: new Date().toLocaleDateString() }] };
-            
-            await fetch(API_URL, {
+            await fetch(API, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(payload)
@@ -163,40 +173,33 @@
         },
 
         load: async function() {
-            try {
-                const res = await fetch(API_URL);
-                const data = await res.json();
-                const feed = document.getElementById('feed');
-                
-                feed.innerHTML = data.reverse().map(p => `
-                    <div class="card">
-                        ${p.image ? `<img src="${p.image}" class="card-img" onerror="this.src='https://via.placeholder.com/800x400?text=Rasm+Topilmadi'">` : ''}
-                        <div class="card-content">
-                            <span class="card-date">YANGILIKLAR • ${p.date}</span>
-                            <h2 class="card-title">${p.title}</h2>
-                            <p class="card-text">${p.body}</p>
-                        </div>
-                        <div class="admin-actions" style="display: ${this.isMod ? 'flex' : 'none'}">
-                            <button class="btn-edit" onclick="app.edit('${p.id}', '${p.title}', '${encodeURIComponent(p.body)}', '${p.image}')">TAHRIRLASH</button>
-                            <button class="btn-del" onclick="app.del('${p.id}')">O'CHIRISH</button>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (e) { console.log("Xato!"); }
-        },
+            const res = await fetch(API);
+            const data = await res.json();
+            const feed = document.getElementById('feed-box');
+            const side = document.getElementById('side-news');
 
-        edit: function(id, title, body, img) {
-            document.getElementById('edit-id').value = id;
-            document.getElementById('inp-title').value = title;
-            document.getElementById('inp-body').value = decodeURIComponent(body);
-            this.currentImg = img;
-            window.scrollTo(0,0);
+            const newsHtml = data.reverse().map(p => `
+                <div class="news-card">
+                    <div class="img-box">
+                        <img src="${p.image}" alt="rasm" onerror="this.src='https://via.placeholder.com/800x400?text=Rasm+Yuklanmadi'">
+                    </div>
+                    <div class="content-box">
+                        <span class="badge">${p.category || 'Yangiliklar'}</span>
+                        <span style="font-size:0.8rem; color:#999"> | ${p.date}</span>
+                        <h2>${p.title}</h2>
+                        <p>${p.body}</p>
+                        ${this.isMod ? `<button onclick="app.del('${p.id}')" style="color:red; cursor:pointer; border:none; background:none; font-weight:bold;">O'CHIRISH</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            feed.innerHTML = newsHtml;
+            side.innerHTML = data.slice(0,5).map(p => `<div class="side-item">${p.title.substring(0, 50)}...</div>`).join('');
         },
 
         del: async function(id) {
-            if(confirm("O'chirilsinmi?")) {
-                document.getElementById('loading').style.display = 'flex';
-                await fetch(`${API_URL}/id/${id}`, { method: 'DELETE' });
+            if(confirm("Ushbu xabarni o'chirasizmi?")) {
+                await fetch(`${API}/id/${id}`, { method: 'DELETE' });
                 location.reload();
             }
         }
