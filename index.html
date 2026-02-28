@@ -3,209 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRO-PRESS | Professional News Portal</title>
+    <title>PRO-PORTFOLIO | Enterprise Edition</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Lora:wght@700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
     <style>
         :root {
-            --main-blue: #004a99;
-            --dark-blue: #003366;
-            --light-bg: #f2f4f7;
-            --white: #ffffff;
-            --gray-text: #555e67;
+            --primary: #0369a1;
+            --primary-light: #e0f2fe;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --glass-border: rgba(255, 255, 255, 0.5);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Ubuntu', sans-serif; }
-        body { background-color: var(--light-bg); color: #1a1a1a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text-main); overflow-x: hidden; }
 
-        /* HEADER & NAVIGATION */
-        header { background: var(--main-blue); color: white; padding: 15px 5%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 1000; }
-        .header-top { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Lora', serif; font-size: 2rem; color: white; text-decoration: none; font-weight: bold; }
-        
-        .nav-cats { display: flex; gap: 20px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; overflow-x: auto; }
-        .nav-cats a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: bold; white-space: nowrap; }
-        .nav-cats a:hover { color: white; }
-
-        /* ADMIN CONTROL BUTTON */
-        .admin-trigger { background: var(--dark-blue); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
-
-        /* MAIN CONTAINER */
-        .container { max-width: 1100px; margin: 20px auto; display: grid; grid-template-columns: 2fr 1fr; gap: 25px; padding: 0 15px; }
-
-        /* NEWS CARDS */
-        .news-list { display: flex; flex-direction: column; gap: 25px; }
-        .news-card { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
-        
-        /* RASM JADVALI */
-        .img-box { width: 100%; height: 400px; background: #ddd; overflow: hidden; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .img-box img:hover { transform: scale(1.02); }
-
-        .content-box { padding: 25px; }
-        .badge { background: var(--main-blue); color: white; padding: 4px 10px; border-radius: 3px; font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; display: inline-block; }
-        .news-card h2 { font-family: 'Lora', serif; font-size: 1.8rem; margin-bottom: 15px; line-height: 1.3; color: #000; }
-        .news-card p { color: var(--gray-text); line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px; }
-
-        /* ADMIN PANEL DRAWER */
-        #admin-panel { display: none; background: #fff; padding: 25px; border-radius: 8px; margin-bottom: 30px; border: 2px solid var(--main-blue); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; outline: none; }
-        .btn-send { background: #22c55e; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
-
-        /* SIDEBAR */
-        aside { background: var(--white); padding: 20px; border-radius: 8px; height: fit-content; }
-        aside h3 { border-bottom: 2px solid var(--main-blue); padding-bottom: 10px; margin-bottom: 15px; }
-        .side-item { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; font-weight: bold; color: #333; cursor: pointer; }
-
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
-            .img-box { height: 250px; }
+        /* HEADER - Premium Design */
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; top: 0; z-index: 1000;
         }
+        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
+        
+        .admin-nav-btn {
+            background: var(--primary-light); color: var(--primary);
+            padding: 10px 20px; border-radius: 12px; border: none;
+            font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .admin-nav-btn:hover { background: var(--primary); color: white; transform: scale(1.05); }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 60px 8% 20px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--primary-light) 0%, var(--bg) 100%);
+        }
+        .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 15px; color: var(--primary); }
+
+        /* GRID SYSTEM */
+        .main-grid {
+            max-width: 1200px; margin: 0 auto; padding: 40px 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px;
+        }
+
+        /* CARD - High End Portfolio Style */
+        .p-card {
+            background: var(--card);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column;
+        }
+        .p-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(3, 105, 161, 0.1); }
+
+        .p-img-container { width: 100%; height: 260px; background: #eee; position: relative; overflow: hidden; }
+        .p-img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .p-content { padding: 25px; flex-grow: 1; }
+        .p-type { 
+            font-size: 0.7rem; font-weight: 800; text-transform: uppercase; 
+            color: var(--primary); background: var(--primary-light);
+            padding: 5px 12px; border-radius: 20px; margin-bottom: 12px; display: inline-block;
+        }
+        .p-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; line-height: 1.2; }
+        .p-desc { color: var(--text-sub); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+
+        /* ADMIN DASHBOARD - Drawer Style */
+        #admin-panel {
+            position: fixed; right: -100%; top: 0; width: 450px; height: 100vh;
+            background: white; z-index: 2000; transition: 0.5s;
+            box-shadow: -20px 0 50px rgba(0,0,0,0.1); padding: 40px;
+            overflow-y: auto;
+        }
+        #admin-panel.active { right: 0; }
+        
+        .form-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 30px; }
+        input, textarea, select {
+            width: 100%; padding: 15px; margin-bottom: 20px;
+            border: 2px solid #f1f5f9; border-radius: 14px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); }
+        
+        .btn-send {
+            width: 100%; padding: 18px; background: var(--primary); color: white;
+            border: none; border-radius: 14px; font-weight: 800; cursor: pointer;
+        }
+
+        /* ACTIONS */
+        .card-actions { 
+            padding: 15px 25px; border-top: 1px solid #f1f5f9; 
+            display: none; justify-content: space-between; 
+        }
+
+        /* LOADER */
+        .loader { position: fixed; inset: 0; background: var(--bg); z-index: 3000; display: flex; align-items: center; justify-content: center; }
+        .dots { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; background: var(--primary); border-radius: 50%; animation: bounce 0.5s infinite alternate; }
+        @keyframes bounce { to { transform: translateY(-10px); } }
+
+        @media (max-width: 500px) { #admin-panel { width: 100%; } }
     </style>
 </head>
 <body>
 
+<div class="loader" id="page-loader"><div class="dots"><div class="dot"></div><div class="dot" style="animation-delay: 0.2s"></div><div class="dot" style="animation-delay: 0.4s"></div></div></div>
+
 <header>
-    <div class="header-top">
-        <a href="#" class="logo">PRO-PRESS</a>
-        <button class="admin-trigger" onclick="app.checkAdmin()">PANEL ⚙️</button>
-    </div>
-    <div class="nav-cats">
-        <a href="#">BOSH SAHIFA</a>
-        <a href="#">SIYOSAT</a>
-        <a href="#">IQTISODIYOT</a>
-        <a href="#">JAMIYAT</a>
-        <a href="#">TEXNOLOGIYA</a>
-        <a href="#">SPORT</a>
-    </div>
+    <div class="logo">PRO-PORTFOLIO</div>
+    <button class="admin-nav-btn" onclick="sys.toggleAdmin()">BOSHQARUV</button>
 </header>
 
-<div class="container">
-    <div class="news-list">
-        <div id="admin-panel">
-            <h2 style="margin-bottom: 15px;">Yangi nashr yaratish</h2>
-            <div class="form-row">
-                <input type="text" id="p-title" placeholder="Maqola sarlavhasi">
-                <select id="p-cat">
-                    <option value="Siyosat">Siyosat</option>
-                    <option value="Iqtisodiyot">Iqtisodiyot</option>
-                    <option value="Texnologiya">Texnologiya</option>
-                    <option value="Sport">Sport</option>
-                </select>
-            </div>
-            <textarea id="p-body" rows="6" placeholder="Batafsil ma'lumot..."></textarea>
-            <input type="file" id="p-file" accept="image/*" onchange="app.previewImg(this)">
-            <div id="img-feedback"></div>
-            <button class="btn-send" onclick="app.publish()">NASHIR QILISH</button>
-        </div>
+<section class="hero">
+    <h1>Mening Ijodiy Ishlarim</h1>
+    <p style="color:var(--text-sub)">Dizayn, Texnologiya va San'at birlashgan nuqta</p>
+</section>
 
-        <div id="feed-box"></div>
+<div class="main-grid" id="portfolio-grid">
     </div>
 
-    <aside>
-        <h3>Eng so'nggi xabarlar</h3>
-        <div id="side-news"></div>
-    </aside>
+<div id="admin-panel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <span class="form-title">Yangi Element</span>
+        <button onclick="sys.toggleAdmin()" style="border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+    </div>
+    
+    <input type="hidden" id="edit-id">
+    <input type="text" id="title" placeholder="Loyiha sarlavhasi">
+    <select id="category">
+        <option value="Dizayn">Grafik Dizayn</option>
+        <option value="Web">Web Dasturlash</option>
+        <option value="Marketing">SMM / Marketing</option>
+        <option value="Mobile">Mobile App</option>
+    </select>
+    <textarea id="body" rows="6" placeholder="Loyiha haqida batafsil..."></textarea>
+    
+    <label style="font-weight: 700; margin-bottom: 10px; display: block;">Muqova rasmi:</label>
+    <input type="file" id="file" accept="image/*" onchange="sys.handleImage(this)">
+    <div id="img-preview" style="margin-bottom: 20px;"></div>
+    
+    <button class="btn-send" onclick="sys.submit()">TIZIMGA NASHR ETISH</button>
 </div>
 
 <script>
-    const API = "https://sheetdb.io/api/v1/9vpxgyb4jfycs";
-    const PASS = "1997";
+    const API_CONFIG = {
+        URL: "https://sheetdb.io/api/v1/9vpxgyb4jfycs",
+        KEY: "1997"
+    };
 
-    const app = {
-        isMod: false,
-        imgData: "",
+    const sys = {
+        isAuth: false,
+        imgBlob: "",
 
-        checkAdmin: function() {
-            const p = prompt("Admin parolini kiriting:");
-            if(p === PASS) {
-                this.isMod = true;
-                document.getElementById('admin-panel').style.display = 'block';
-                this.load();
-            }
+        init: function() {
+            this.fetchData();
+            setTimeout(() => document.getElementById('page-loader').style.display = 'none', 1000);
         },
 
-        previewImg: function(input) {
+        toggleAdmin: function() {
+            if(!this.isAuth) {
+                const p = prompt("Tizim kalitini kiriting:");
+                if(p === API_CONFIG.KEY) {
+                    this.isAuth = true;
+                    this.fetchData(); // Admin tugmalarini chiqarish uchun
+                } else { return alert("Xato kalit!"); }
+            }
+            document.getElementById('admin-panel').classList.toggle('active');
+        },
+
+        handleImage: function(input) {
+            const file = input.files[0];
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = new Image();
                 img.src = e.target.result;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const w = 1200; // Professional sifat uchun kenglik
-                    const h = img.height * (w / img.width);
-                    canvas.width = w; canvas.height = h;
-                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    this.imgData = canvas.toDataURL('image/jpeg', 0.8);
-                    document.getElementById('img-feedback').innerHTML = `<p style="color:green">Rasm tayyor!</p>`;
+                    const MAX_WIDTH = 800; // Bazada ko'rinishi uchun optimallashtirish
+                    const scale = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scale;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    
+                    // Rasmni sifatini biroz pasaytirib bazaga sig'adigan qilamiz
+                    this.imgBlob = canvas.toDataURL('image/jpeg', 0.6);
+                    document.getElementById('img-preview').innerHTML = `<img src="${this.imgBlob}" style="width:100%; border-radius:12px;">`;
                 }
             };
-            reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(file);
         },
 
-        publish: async function() {
-            const t = document.getElementById('p-title').value;
-            const b = document.getElementById('p-body').value;
-            const c = document.getElementById('p-cat').value;
+        submit: async function() {
+            const t = document.getElementById('title').value;
+            const b = document.getElementById('body').value;
+            const c = document.getElementById('category').value;
+            const id = document.getElementById('edit-id').value;
 
-            if(!t || !b || !this.imgData) return alert("Ma'lumotlar va rasm to'liq emas!");
+            if(!t || !b || !this.imgBlob) return alert("Ma'lumotlar yetarli emas!");
 
-            const payload = { 
-                data: [{ 
-                    id: Date.now(), 
-                    title: t, 
-                    body: b, 
+            document.getElementById('page-loader').style.display = 'flex';
+
+            if(id) { await fetch(`${API_CONFIG.URL}/id/${id}`, { method: 'DELETE' }); }
+
+            const payload = {
+                data: [{
+                    id: id || Date.now(),
+                    title: t,
+                    body: b,
                     category: c,
-                    image: this.imgData, 
-                    date: new Date().toLocaleDateString('uz-UZ') 
-                }] 
+                    image: this.imgBlob,
+                    date: new Date().toLocaleDateString('uz-UZ')
+                }]
             };
 
-            await fetch(API, {
+            await fetch(API_CONFIG.URL, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(payload)
             });
 
-            location.reload();
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            setTimeout(() => location.reload(), 1500);
         },
 
-        load: async function() {
-            const res = await fetch(API);
-            const data = await res.json();
-            const feed = document.getElementById('feed-box');
-            const side = document.getElementById('side-news');
-
-            const newsHtml = data.reverse().map(p => `
-                <div class="news-card">
-                    <div class="img-box">
-                        <img src="${p.image}" alt="rasm" onerror="this.src='https://via.placeholder.com/800x400?text=Rasm+Yuklanmadi'">
+        fetchData: async function() {
+            try {
+                const res = await fetch(API_CONFIG.URL);
+                const data = await res.json();
+                const grid = document.getElementById('portfolio-grid');
+                
+                grid.innerHTML = data.reverse().map(item => `
+                    <div class="p-card">
+                        <div class="p-img-container">
+                            <img src="${item.image}" class="p-img" onerror="this.src='https://via.placeholder.com/800x600?text=Yuklanmoqda...'">
+                        </div>
+                        <div class="p-content">
+                            <span class="p-type">${item.category || 'Loyihalar'}</span>
+                            <h2 class="p-title">${item.title}</h2>
+                            <p class="p-desc">${item.body}</p>
+                            <span style="font-size:0.8rem; color:var(--text-sub)">📅 ${item.date}</span>
+                        </div>
+                        <div class="card-actions" style="display: ${this.isAuth ? 'flex' : 'none'}">
+                            <button onclick="sys.edit('${item.id}', '${item.title}', '${encodeURIComponent(item.body)}', '${item.image}')" style="color:var(--primary); cursor:pointer; border:none; background:none; font-weight:bold;">TAHRIRLASH</button>
+                            <button onclick="sys.del('${item.id}')" style="color:red; cursor:pointer; border:none; background:none; font-weight:bold;">O'CHIRISH</button>
+                        </div>
                     </div>
-                    <div class="content-box">
-                        <span class="badge">${p.category || 'Yangiliklar'}</span>
-                        <span style="font-size:0.8rem; color:#999"> | ${p.date}</span>
-                        <h2>${p.title}</h2>
-                        <p>${p.body}</p>
-                        ${this.isMod ? `<button onclick="app.del('${p.id}')" style="color:red; cursor:pointer; border:none; background:none; font-weight:bold;">O'CHIRISH</button>` : ''}
-                    </div>
-                </div>
-            `).join('');
+                `).join('');
+            } catch (e) { console.error("Aloqa uzildi"); }
+        },
 
-            feed.innerHTML = newsHtml;
-            side.innerHTML = data.slice(0,5).map(p => `<div class="side-item">${p.title.substring(0, 50)}...</div>`).join('');
+        edit: function(id, title, body, img) {
+            document.getElementById('admin-panel').classList.add('active');
+            document.getElementById('edit-id').value = id;
+            document.getElementById('title').value = title;
+            document.getElementById('body').value = decodeURIComponent(body);
+            this.imgBlob = img;
+            document.getElementById('img-preview').innerHTML = `<img src="${img}" style="width:100%; border-radius:12px;">`;
         },
 
         del: async function(id) {
-            if(confirm("Ushbu xabarni o'chirasizmi?")) {
-                await fetch(`${API}/id/${id}`, { method: 'DELETE' });
+            if(confirm("Ushbu loyiha o'chirilsinmi?")) {
+                document.getElementById('page-loader').style.display = 'flex';
+                await fetch(`${API_CONFIG.URL}/id/${id}`, { method: 'DELETE' });
                 location.reload();
             }
         }
     };
 
-    window.onload = () => app.load();
+    sys.init();
 </script>
 
 </body>
