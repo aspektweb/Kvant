@@ -3,116 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mening Ijodiy Portfoliom</title>
+    <title>Digital Portfolio | Professional</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: radial-gradient(circle at top right, #1e293b, #0f172a);
-            color: #f8fafc;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+        .project-card {
+            border: 1px solid #222;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
         }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: #38bdf8;
-            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.3);
+        .project-card:hover {
+            border-color: #555;
+            background: #0a0a0a;
         }
 
-        .gradient-text {
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .project-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
         }
 
-        #loader {
-            border-top-color: #38bdf8;
-            animation: spinner 0.6s linear infinite;
+        .project-card:hover .project-image {
+            filter: grayscale(0%);
         }
 
-        @keyframes spinner {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .badge {
+            background: #111;
+            border: 1px solid #333;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
 </head>
-<body class="p-6 md:p-12">
+<body class="antialiased">
 
-    <header class="max-w-6xl mx-auto mb-16 text-center">
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
-            Mening <span class="gradient-text">Ijodiy Portfoliom</span>
-        </h1>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-            Raqamli savodxonlik, ilmiy maqolalar va ijodiy loyihalar to'plami.
-        </p>
-    </header>
+    <nav class="max-w-6xl mx-auto py-10 px-6 flex justify-between items-center">
+        <div class="text-xl font-bold tracking-tighter">PORTFOLIO.</div>
+        <div class="text-sm text-gray-400">Digital Literacy & Research</div>
+    </nav>
 
-    <main class="max-w-6xl mx-auto">
-        <div id="loading-state" class="flex justify-center items-center py-20">
-            <div id="loader" class="w-12 h-12 border-4 border-gray-700 rounded-full"></div>
+    <main class="max-w-6xl mx-auto px-6">
+        
+        <div class="mb-20">
+            <h1 id="user-name" class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+                Selected Works
+            </h1>
+            <p class="text-gray-500 text-xl max-w-xl border-l-2 border-zinc-800 pl-6">
+                Raqamli savodxonlik va ilmiy tahlillar jamlanmasi. Examinerlar uchun maxsus tayyorlangan resurs.
+            </p>
         </div>
 
-        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="col-span-full py-20 text-center text-gray-600 animate-pulse">
+                Ma'lumotlar yuklanmoqda...
             </div>
+        </div>
     </main>
 
-    <footer class="max-w-6xl mx-auto mt-24 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-        <p>&copy; 2026 Barcha huquqlar himoyalangan. Portfolio tizimi SheetDB API orqali ishlaydi.</p>
+    <footer class="max-w-6xl mx-auto px-6 py-20 mt-20 border-t border-zinc-900 text-zinc-600 text-xs">
+        <div class="flex flex-col md:flex-row justify-between gap-4">
+            <p>DESIGNED FOR EXAMINERS / 2026</p>
+            <p>POWERED BY SHEETDB API</p>
+        </div>
     </footer>
 
     <script>
         const API_URL = 'https://sheetdb.io/api/v1/9vpxgyb4jfycs';
 
-        async function fetchWorks() {
+        async function loadContent() {
             try {
                 const response = await fetch(API_URL);
                 const data = await response.json();
                 
                 const grid = document.getElementById('portfolio-grid');
-                const loader = document.getElementById('loading-state');
+                grid.innerHTML = ''; // Loaderni tozalash
 
-                grid.innerHTML = data.map(item => `
-                    <div class="glass-card rounded-3xl p-6 flex flex-col h-full">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="bg-sky-500/10 text-sky-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                                ${item.category || 'Maqola'}
-                            </span>
-                            <i class="fa-solid fa-arrow-up-right-from-square text-gray-500"></i>
+                data.forEach(item => {
+                    const card = `
+                        <div class="project-card group">
+                            <div class="relative overflow-hidden bg-zinc-900">
+                                <img src="${item.image || 'https://via.placeholder.com/600x400/111/333?text=No+Image'}" 
+                                     alt="${item.title}" 
+                                     class="project-image">
+                            </div>
+                            
+                            <div class="p-8">
+                                <div class="flex gap-2 mb-4">
+                                    <span class="badge">${item.category || 'Research'}</span>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-3 group-hover:text-blue-400 transition-colors">
+                                    ${item.title}
+                                </h3>
+                                <p class="text-zinc-500 mb-6 leading-relaxed">
+                                    ${item.description || 'Batafsil ma\'lumot ilova qilingan havolada ko\'rsatilgan.'}
+                                </p>
+                                <a href="${item.link}" target="_blank" 
+                                   class="text-sm font-bold border-b border-white pb-1 hover:text-blue-400 hover:border-blue-400 transition-all">
+                                    OPEN PROJECT →
+                                </a>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold mb-3 text-white leading-tight">
-                            ${item.title}
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-6 flex-grow">
-                            ${item.description || 'Ushbu ijodiy ish bo\'yicha qisqacha ma\'lumot hali qo\'shilmagan.'}
-                        </p>
-                        <a href="${item.link}" target="_blank" 
-                           class="inline-flex items-center justify-center w-full py-3 px-4 rounded-xl bg-white text-black font-semibold hover:bg-sky-400 hover:text-white transition-colors duration-300">
-                           Ko'rib chiqish
-                        </a>
-                    </div>
-                `).join('');
-
-                loader.classList.add('hidden');
-                grid.classList.remove('hidden');
+                    `;
+                    grid.innerHTML += card;
+                });
 
             } catch (error) {
-                console.error('Xatolik:', error);
-                document.getElementById('loading-state').innerHTML = `<p class="text-red-400">Ma'lumot yuklashda xatolik yuz berdi.</p>`;
+                console.error("Xatolik:", error);
+                document.getElementById('portfolio-grid').innerHTML = "Ma'lumotni yuklashda xatolik yuz berdi.";
             }
         }
 
-        // Ma'lumotlarni yuklashni boshlash
-        fetchWorks();
+        loadContent();
     </script>
 </body>
 </html>
