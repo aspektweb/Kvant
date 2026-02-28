@@ -3,267 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Press Portal</title>
+    <title>PRO-PRESS ULTIMATE v10.0</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
     <style>
         :root {
-            --primary: #6366f1;
-            --secondary: #a855f7;
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
             --bg: #0f172a;
-            --glass: rgba(255, 255, 255, 0.03);
+            --surface: #1e293b;
             --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --danger: #ef4444;
+            --success: #10b981;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background-color: var(--bg); 
-            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
-            color: var(--text); 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            min-height: 100vh;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* Navigation */
+        /* 1. NAVIGATION & LAYOUT */
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: sticky; top: 0; z-index: 1000; background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px); border-bottom: 1px solid #334155;
+            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
         }
-
-        .logo { font-weight: 800; font-size: 1.5rem; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .nav-btns button {
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: var(--glass);
-            color: white;
-            cursor: pointer;
-            margin-left: 10px;
-            transition: 0.3s;
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-light); cursor: pointer; }
+        .nav-links { display: flex; gap: 10px; }
+        .btn-tab { 
+            padding: 8px 16px; border-radius: 10px; border: 1px solid #334155;
+            background: transparent; color: var(--text-dim); cursor: pointer; transition: 0.3s;
         }
+        .btn-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        .nav-btns button.active { background: var(--primary); border-color: var(--primary); }
-
-        /* Screens */
-        .screen { display: none; padding: 40px 5%; animation: fadeIn 0.5s ease; }
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .screen { display: none; animation: fadeIn 0.4s ease-out; }
         .screen.active { display: block; }
+
+        /* 2. DASHBOARD & STATS */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--surface); padding: 20px; border-radius: 16px; border: 1px solid #334155; }
+        .stat-val { font-size: 1.8rem; font-weight: 800; color: var(--primary-light); }
+
+        /* 3. EDITOR (ADMIN PANEL) */
+        .editor-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 25px; }
+        .card { background: var(--surface); padding: 25px; border-radius: 20px; border: 1px solid #334155; }
+        input, textarea, select {
+            width: 100%; padding: 14px; margin: 10px 0 20px; border-radius: 12px;
+            background: #0f172a; border: 1px solid #334155; color: white; outline: none;
+        }
+        input:focus { border-color: var(--primary); }
+        .drop-zone {
+            border: 2px dashed #475569; border-radius: 15px; padding: 40px; text-align: center;
+            cursor: pointer; transition: 0.3s;
+        }
+        .drop-zone:hover { border-color: var(--primary); background: rgba(79, 70, 229, 0.1); }
+        #preview-img { width: 100%; border-radius: 12px; margin-top: 15px; display: none; }
+
+        /* 4. NEWS FEED (USER VIEW) */
+        .search-bar { margin-bottom: 30px; display: flex; gap: 10px; }
+        .feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .news-card { 
+            background: var(--surface); border-radius: 24px; overflow: hidden; 
+            border: 1px solid #334155; transition: 0.3s; position: relative;
+        }
+        .news-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .news-img { width: 100%; height: 220px; object-fit: cover; background: #0f172a; }
+        .news-info { padding: 20px; }
+        .badge { background: var(--primary); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
+        
+        /* 5. CRUD CONTROLS */
+        .crud-actions { display: flex; gap: 10px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #334155; }
+        .btn-crud { flex: 1; padding: 10px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; }
+        .btn-edit { background: #312e81; color: #a5b4fc; }
+        .btn-del { background: #450a0a; color: #fca5a5; }
+
+        /* 6. MODALS & LOADERS */
+        #loader { 
+            position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .spinner { width: 50px; height: 50px; border: 5px solid #1e293b; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Admin Panel Card */
-        .admin-card {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.05);
-            backdrop-filter: blur(20px);
-        }
-
-        input, textarea {
-            width: 100%;
-            background: rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 12px;
-            color: white;
-            margin-bottom: 20px;
-            font-family: inherit;
-        }
-
-        .btn-send {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
-        }
-
-        /* Feed Grid */
-        .feed-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .post-card {
-            background: var(--glass);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-        }
-
-        .post-card:hover { transform: translateY(-5px); border-color: rgba(99, 102, 241, 0.3); }
-
-        .post-img { width: 100%; height: 200px; object-fit: cover; background: #1e293b; }
-        .post-content { padding: 20px; }
-        .post-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
-        .post-body { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
-        /* Preview Area */
-        #img-preview { 
-            width: 100%; height: 200px; border-radius: 12px; border: 2px dashed rgba(255,255,255,0.1);
-            margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden;
-        }
-        #img-preview img { width: 100%; height: 100%; object-fit: cover; }
-
-        #loader { text-align: center; color: var(--primary); display: none; margin-bottom: 10px; font-weight: 600; }
+        @media (max-width: 850px) { .editor-layout { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
+<div id="loader"><div class="spinner"></div></div>
+
 <nav>
-    <div class="logo">MODERN PRESS</div>
-    <div class="nav-btns">
-        <button id="btn-reader" class="active" onclick="app.switch('reader')">Kuzatuvchi</button>
-        <button id="btn-admin" onclick="app.switch('admin')">Admin</button>
+    <div class="logo" onclick="app.switchTab('reader')">PRO-PRESS <span>v10</span></div>
+    <div class="nav-links">
+        <button class="btn-tab active" id="tab-reader" onclick="app.switchTab('reader')">Lenta</button>
+        <button class="btn-tab" id="tab-admin" onclick="app.switchTab('admin')">Admin Panel</button>
     </div>
 </nav>
 
-<div id="screen-reader" class="screen active">
-    <h1 style="margin-bottom: 30px; font-weight: 800;">So'nggi yangiliklar</h1>
-    <div id="feed" class="feed-grid">
+<div class="container">
+    
+    <div id="scr-reader" class="screen active">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p style="color: var(--text-dim); font-size: 0.8rem;">JAMI MAQOLALAR</p>
+                <div class="stat-val" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <p style="color: var(--text-dim); font-size: 0.8rem;">BUGUNGI NASHRLAR</p>
+                <div class="stat-val" id="stat-today">0</div>
+            </div>
         </div>
-</div>
 
-<div id="screen-admin" class="screen">
-    <div class="admin-card">
-        <h2 style="margin-bottom: 25px; text-align: center;">Yangi maqola yaratish</h2>
-        
-        <input type="text" id="title" placeholder="Sarlavha">
-        <textarea id="body" rows="6" placeholder="Maqola matni..."></textarea>
-        
-        <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">Rasm yuklash:</p>
-        <input type="file" id="file" accept="image/*" onchange="app.handleImg(this)" style="padding: 10px; font-size: 0.8rem;">
-        
-        <div id="img-preview"><span style="color: #475569;">Rasm tanlanmagan</span></div>
-        
-        <div id="loader">Yuborilmoqda... kuting</div>
-        <button class="btn-send" id="saveBtn" onclick="app.save()">NASHR ETISH</button>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Maqolalarni qidirish..." oninput="app.search(this.value)">
+        </div>
+
+        <div id="feed" class="feed-grid">
+            </div>
     </div>
+
+    <div id="scr-admin" class="screen">
+        <div class="editor-layout">
+            <div class="card">
+                <h2 id="editor-title" style="margin-bottom: 20px;">Yangi maqola yaratish</h2>
+                <input type="hidden" id="edit-id">
+                
+                <label>Sarlavha</label>
+                <input type="text" id="inp-title" placeholder="Maqola sarlavhasini kiriting">
+                
+                <label>Kategoriya</label>
+                <select id="inp-cat">
+                    <option value="Texnologiya">Texnologiya</option>
+                    <option value="Siyosat">Siyosat</option>
+                    <option value="Sport">Sport</option>
+                    <option value="Madaniyat">Madaniyat</option>
+                </select>
+
+                <label>Matn</label>
+                <textarea id="inp-body" rows="10" placeholder="Maqola mazmunini batafsil yozing..."></textarea>
+                
+                <button class="btn-tab active" style="width: 100%; padding: 18px; font-weight: 700;" id="saveBtn" onclick="app.save()">NASHR ETISH</button>
+            </div>
+
+            <div class="card">
+                <h3>Multimedia</h3>
+                <div class="drop-zone" onclick="document.getElementById('inp-file').click()">
+                    <p id="upload-hint">Rasm yuklash uchun bosing</p>
+                    <input type="file" id="inp-file" hidden accept="image/*" onchange="app.handleImg(this)">
+                    <img id="preview-img" src="">
+                </div>
+                <div style="margin-top: 20px; color: var(--text-dim); font-size: 0.85rem;">
+                    <p>• Tizim rasmni avtomatik siqadi</p>
+                    <p>• Max hajm: 5MB</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    const API_URL = "https://sheetdb.io/api/v1/9vpxgyb4jfycs"; // Sizning URL
+    /* 10-MODUL: CORE ENGINE (JS) */
+    const API_URL = "https://sheetdb.io/api/v1/9vpxgyb4jfycs";
+    const ADMIN_PASS = "1234"; // Panelga kirish paroli
 
     const app = {
-        imgData: "",
+        allData: [],
+        currentImg: "",
+        isEditing: false,
 
-        switch: function(mode) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-btns button').forEach(b => b.classList.remove('active'));
-            
-            document.getElementById(`screen-${mode}`).classList.add('active');
-            document.getElementById(`btn-${mode}`).classList.add('active');
-            
-            if(mode === 'reader') this.load();
-        },
-
-        handleImg: function(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.src = e.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        const maxW = 800;
-                        const scale = maxW / img.width;
-                        canvas.width = maxW;
-                        canvas.height = img.height * scale;
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        this.imgData = canvas.toDataURL('image/jpeg', 0.6);
-                        document.getElementById('img-preview').innerHTML = `<img src="${this.imgData}">`;
-                    };
-                };
-                reader.readAsDataURL(input.files[0]);
+        // Tablar boshqaruvi
+        switchTab: function(tab) {
+            if(tab === 'admin') {
+                const pass = prompt("Admin parolini kiriting:");
+                if(pass !== ADMIN_PASS) return alert("Parol noto'g'ri!");
             }
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active'));
+            document.getElementById(`scr-${tab}`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            if(tab === 'reader') this.fetchData();
         },
 
+        // Rasmni qayta ishlash va optimizatsiya
+        handleImg: function(input) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const maxW = 1000;
+                    const scale = maxW / img.width;
+                    canvas.width = maxW;
+                    canvas.height = img.height * scale;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    this.currentImg = canvas.toDataURL('image/jpeg', 0.7);
+                    document.getElementById('preview-img').src = this.currentImg;
+                    document.getElementById('preview-img').style.display = 'block';
+                    document.getElementById('upload-hint').style.display = 'none';
+                }
+            }
+            reader.readAsDataURL(file);
+        },
+
+        // CRUD: Ma'lumotni saqlash
         save: async function() {
-            const t = document.getElementById('title').value;
-            const b = document.getElementById('body').value;
-            if(!t || !b) return alert("Hamma joyni to'ldiring!");
+            const t = document.getElementById('inp-title').value;
+            const b = document.getElementById('inp-body').value;
+            const c = document.getElementById('inp-cat').value;
+            const id = document.getElementById('edit-id').value;
 
-            const btn = document.getElementById('saveBtn');
-            const loader = document.getElementById('loader');
+            if(!t || !b) return alert("Sarlavha va matnni to'ldiring!");
             
-            btn.style.display = 'none';
-            loader.style.display = 'block';
-
-            const payload = {
-                data: [{
-                    id: new Date().toLocaleDateString('uz-UZ'),
-                    title: t,
-                    body: b,
-                    image: this.imgData
-                }]
-            };
+            document.getElementById('loader').style.display = 'flex';
 
             try {
+                if(this.isEditing) {
+                    await fetch(`${API_URL}/id/${id}`, { method: 'DELETE' });
+                }
+
+                const payload = {
+                    data: [{
+                        id: this.isEditing ? id : new Date().toLocaleString('uz-UZ'),
+                        title: t,
+                        body: b,
+                        category: c,
+                        image: this.currentImg,
+                        date: new Date().toLocaleDateString('uz-UZ')
+                    }]
+                };
+
                 const res = await fetch(API_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(payload)
                 });
 
                 if(res.ok) {
-                    alert("Muvaffaqiyatli nashr etildi!");
-                    this.imgData = "";
-                    document.getElementById('title').value = "";
-                    document.getElementById('body').value = "";
-                    document.getElementById('img-preview').innerHTML = "<span>Tanlanmagan</span>";
-                    this.switch('reader');
+                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                    alert("Muvaffaqiyatli saqlandi!");
+                    location.reload();
                 }
             } catch (e) {
-                alert("Xatolik yuz berdi.");
-            } finally {
-                btn.style.display = 'block';
-                loader.style.display = 'none';
+                alert("Xatolik yuz berdi!");
+                document.getElementById('loader').style.display = 'none';
             }
         },
 
-        load: async function() {
-            const feed = document.getElementById('feed');
-            feed.innerHTML = "<p>Yangiliklar yuklanmoqda...</p>";
-            
+        // CRUD: Ma'lumotlarni yuklash
+        fetchData: async function() {
             try {
                 const res = await fetch(API_URL);
-                const data = await res.json();
-                
-                feed.innerHTML = data.reverse().map(post => `
-                    <div class="post-card">
-                        ${post.image ? `<img src="${post.image}" class="post-img">` : '<div class="post-img"></div>'}
-                        <div class="post-content">
-                            <p style="font-size: 0.75rem; color: var(--primary); margin-bottom: 5px; font-weight: 600;">${post.id}</p>
-                            <h3 class="post-title">${post.title}</h3>
-                            <p class="post-body">${post.body}</p>
-                            <button onclick="alert('To\\'liq matn: \\n\\n${post.body.replace(/'/g, "\\'")}')" style="margin-top:15px; background:none; border:none; color:var(--primary); cursor:pointer; font-weight:600; font-size:0.9rem;">Batafsil o'qish →</button>
+                this.allData = await res.json();
+                this.render(this.allData);
+                this.updateStats();
+            } catch (e) { console.error("Data error"); }
+        },
+
+        render: function(data) {
+            const feed = document.getElementById('feed');
+            feed.innerHTML = data.reverse().map(item => `
+                <div class="news-card">
+                    ${item.image ? `<img src="${item.image}" class="news-img">` : '<div class="news-img"></div>'}
+                    <div class="news-info">
+                        <span class="badge">${item.category}</span>
+                        <h3 style="margin: 12px 0;">${item.title}</h3>
+                        <p style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.6;">${item.body.substring(0, 120)}...</p>
+                        <div class="crud-actions">
+                            <button class="btn-crud btn-edit" onclick="app.editPrep('${item.id}', '${item.title}', '${encodeURIComponent(item.body)}', '${item.category}', '${item.image}')">Tahrirlash</button>
+                            <button class="btn-crud btn-del" onclick="app.deleteItem('${item.id}')">O'chirish</button>
                         </div>
+                        <p style="font-size: 0.7rem; color: #475569; margin-top: 15px;">Nashr: ${item.id}</p>
                     </div>
-                `).join('');
-            } catch (e) {
-                feed.innerHTML = "<p>Ma'lumotlarni yuklab bo'lmadi.</p>";
+                </div>
+            `).join('');
+        },
+
+        // CRUD: Tahrirlash va O'chirish
+        editPrep: function(id, title, body, cat, img) {
+            this.isEditing = true;
+            this.switchTab('admin');
+            document.getElementById('editor-title').innerText = "Maqolani yangilash";
+            document.getElementById('saveBtn').innerText = "O'ZGARTIRISHNI SAQLASH";
+            document.getElementById('edit-id').value = id;
+            document.getElementById('inp-title').value = title;
+            document.getElementById('inp-body').value = decodeURIComponent(body);
+            document.getElementById('inp-cat').value = cat;
+            if(img) {
+                this.currentImg = img;
+                document.getElementById('preview-img').src = img;
+                document.getElementById('preview-img').style.display = 'block';
+                document.getElementById('upload-hint').style.display = 'none';
             }
+        },
+
+        deleteItem: async function(id) {
+            if(!confirm("Haqiqatan ham o'chirmoqchimisiz?")) return;
+            document.getElementById('loader').style.display = 'flex';
+            await fetch(`${API_URL}/id/${id}`, { method: 'DELETE' });
+            location.reload();
+        },
+
+        // QIDIRUV TIZIMI
+        search: function(query) {
+            const filtered = this.allData.filter(i => 
+                i.title.toLowerCase().includes(query.toLowerCase()) || 
+                i.body.toLowerCase().includes(query.toLowerCase())
+            );
+            this.render(filtered);
+        },
+
+        updateStats: function() {
+            document.getElementById('stat-total').innerText = this.allData.length;
+            const today = new Date().toLocaleDateString('uz-UZ');
+            const todayCount = this.allData.filter(i => i.date === today).length;
+            document.getElementById('stat-today').innerText = todayCount;
         }
     };
 
-    // Dastlabki yuklash
-    app.load();
+    // Dasturni ishga tushirish
+    window.onload = () => {
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            app.fetchData();
+        }, 1200);
+    };
 </script>
 
 </body>
