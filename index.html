@@ -3,187 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRO-PORTFOLIO | Enterprise Edition</title>
+    <title>PRO-PRESS | Milliy Digital Platforma</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
     <style>
         :root {
-            --primary: #0369a1;
-            --primary-light: #e0f2fe;
-            --accent: #f59e0b;
-            --bg: #f8fafc;
-            --card: rgba(255, 255, 255, 0.9);
-            --text-main: #0f172a;
-            --text-sub: #64748b;
-            --glass-border: rgba(255, 255, 255, 0.5);
+            --brand-blue: #004a99;
+            --light-bg: #f9fafb;
+            --card-bg: #ffffff;
+            --text-dark: #111827;
+            --text-sub: #6b7280;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: var(--text-main); overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background: var(--light-bg); color: var(--text-dark); overflow-x: hidden; }
 
-        /* HEADER - Premium Design */
+        /* HEADER - TUGMASIZ VA TOZA */
         header {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 15px 8%;
+            background: var(--card-bg);
+            border-bottom: 2px solid var(--brand-blue);
+            padding: 15px 5%;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
             position: sticky; top: 0; z-index: 1000;
         }
-        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
-        
-        .admin-nav-btn {
-            background: var(--primary-light); color: var(--primary);
-            padding: 10px 20px; border-radius: 12px; border: none;
-            font-weight: 700; cursor: pointer; transition: 0.3s;
-        }
-        .admin-nav-btn:hover { background: var(--primary); color: white; transform: scale(1.05); }
-
-        /* HERO SECTION */
-        .hero {
-            padding: 60px 8% 20px;
-            text-align: center;
-            background: linear-gradient(180deg, var(--primary-light) 0%, var(--bg) 100%);
-        }
-        .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 15px; color: var(--primary); }
-
-        /* GRID SYSTEM */
-        .main-grid {
-            max-width: 1200px; margin: 0 auto; padding: 40px 20px;
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px;
+        .logo { 
+            font-family: 'Playfair Display', serif; font-size: 2.2rem; 
+            color: var(--brand-blue); text-decoration: none; 
+            cursor: pointer; user-select: none; /* Adminni ochish uchun bu yer bosib turiladi */
         }
 
-        /* CARD - High End Portfolio Style */
-        .p-card {
-            background: var(--card);
-            border-radius: 24px;
-            border: 1px solid var(--glass-border);
+        /* MAQOLA KARTASI - DARYO USLUBIDA */
+        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+
+        .news-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            margin-bottom: 25px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .p-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(3, 105, 161, 0.1); }
+        .news-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .news-content { padding: 25px; }
+        .news-meta { font-size: 0.8rem; color: var(--brand-blue); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+        .news-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.3; margin-bottom: 15px; color: #000; }
+        .news-excerpt { font-size: 1.1rem; color: var(--text-sub); line-height: 1.7; }
 
-        .p-img-container { width: 100%; height: 260px; background: #eee; position: relative; overflow: hidden; }
-        .p-img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .p-content { padding: 25px; flex-grow: 1; }
-        .p-type { 
-            font-size: 0.7rem; font-weight: 800; text-transform: uppercase; 
-            color: var(--primary); background: var(--primary-light);
-            padding: 5px 12px; border-radius: 20px; margin-bottom: 12px; display: inline-block;
+        /* ADMIN TUGMALARI - FAQAT SIZ UCHUN */
+        .admin-controls { 
+            display: none; padding: 10px 25px; 
+            background: #fdf2f2; border-top: 1px solid #eee; 
+            justify-content: flex-end; gap: 10px;
         }
-        .p-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; line-height: 1.2; }
-        .p-desc { color: var(--text-sub); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+        .btn-action { padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; border: none; font-size: 0.8rem; }
+        .btn-edit { background: #e3f2fd; color: #1976d2; }
+        .btn-del { background: #ffebee; color: #d32f2f; }
 
-        /* ADMIN DASHBOARD - Drawer Style */
-        #admin-panel {
-            position: fixed; right: -100%; top: 0; width: 450px; height: 100vh;
-            background: white; z-index: 2000; transition: 0.5s;
-            box-shadow: -20px 0 50px rgba(0,0,0,0.1); padding: 40px;
-            overflow-y: auto;
+        /* YASHIRIN ADMIN MODAL */
+        #admin-modal {
+            display: none; position: fixed; inset: 0; 
+            background: rgba(0,0,0,0.8); z-index: 2000;
+            justify-content: center; align-items: center; padding: 20px;
         }
-        #admin-panel.active { right: 0; }
-        
-        .form-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 30px; }
-        input, textarea, select {
-            width: 100%; padding: 15px; margin-bottom: 20px;
-            border: 2px solid #f1f5f9; border-radius: 14px; outline: none; transition: 0.3s;
-        }
-        input:focus { border-color: var(--primary); }
-        
-        .btn-send {
-            width: 100%; padding: 18px; background: var(--primary); color: white;
-            border: none; border-radius: 14px; font-weight: 800; cursor: pointer;
-        }
-
-        /* ACTIONS */
-        .card-actions { 
-            padding: 15px 25px; border-top: 1px solid #f1f5f9; 
-            display: none; justify-content: space-between; 
-        }
+        .modal-content { background: #fff; width: 100%; max-width: 500px; padding: 30px; border-radius: 15px; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+        .btn-pub { width: 100%; padding: 15px; background: var(--brand-blue); color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
         /* LOADER */
-        .loader { position: fixed; inset: 0; background: var(--bg); z-index: 3000; display: flex; align-items: center; justify-content: center; }
-        .dots { display: flex; gap: 8px; }
-        .dot { width: 12px; height: 12px; background: var(--primary); border-radius: 50%; animation: bounce 0.5s infinite alternate; }
-        @keyframes bounce { to { transform: translateY(-10px); } }
-
-        @media (max-width: 500px) { #admin-panel { width: 100%; } }
+        #loader { position: fixed; inset: 0; background: #fff; display: flex; align-items: center; justify-content: center; z-index: 3000; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--brand-blue); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div class="loader" id="page-loader"><div class="dots"><div class="dot"></div><div class="dot" style="animation-delay: 0.2s"></div><div class="dot" style="animation-delay: 0.4s"></div></div></div>
+<div id="loader"><div class="spinner"></div></div>
 
 <header>
-    <div class="logo">PRO-PORTFOLIO</div>
-    <button class="admin-nav-btn" onclick="sys.toggleAdmin()">BOSHQARUV</button>
+    <div class="logo" id="logo-trigger">PRO-PRESS</div>
 </header>
 
-<section class="hero">
-    <h1>Mening Ijodiy Ishlarim</h1>
-    <p style="color:var(--text-sub)">Dizayn, Texnologiya va San'at birlashgan nuqta</p>
-</section>
-
-<div class="main-grid" id="portfolio-grid">
+<div class="container" id="news-feed">
     </div>
 
-<div id="admin-panel">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <span class="form-title">Yangi Element</span>
-        <button onclick="sys.toggleAdmin()" style="border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+<div id="admin-modal">
+    <div class="modal-content">
+        <h2 id="modal-title" style="margin-bottom: 20px;">Yangi nashr yaratish</h2>
+        <input type="hidden" id="edit-id">
+        <input type="text" id="inp-title" placeholder="Dolzarb sarlavhani kiriting...">
+        <textarea id="inp-body" rows="6" placeholder="Batafsil ma'lumot..."></textarea>
+        <input type="file" id="inp-file" accept="image/*" onchange="app.handleImg(this)">
+        <div id="preview-area"></div>
+        <button class="btn-pub" onclick="app.publish()">TIZIMGA NASHR ETISH</button>
+        <button onclick="app.closeAdmin()" style="margin-top:10px; background:none; border:none; color:red; cursor:pointer; width:100%;">Yopish</button>
     </div>
-    
-    <input type="hidden" id="edit-id">
-    <input type="text" id="title" placeholder="Loyiha sarlavhasi">
-    <select id="category">
-        <option value="Dizayn">Grafik Dizayn</option>
-        <option value="Web">Web Dasturlash</option>
-        <option value="Marketing">SMM / Marketing</option>
-        <option value="Mobile">Mobile App</option>
-    </select>
-    <textarea id="body" rows="6" placeholder="Loyiha haqida batafsil..."></textarea>
-    
-    <label style="font-weight: 700; margin-bottom: 10px; display: block;">Muqova rasmi:</label>
-    <input type="file" id="file" accept="image/*" onchange="sys.handleImage(this)">
-    <div id="img-preview" style="margin-bottom: 20px;"></div>
-    
-    <button class="btn-send" onclick="sys.submit()">TIZIMGA NASHR ETISH</button>
 </div>
 
 <script>
-    const API_CONFIG = {
-        URL: "https://sheetdb.io/api/v1/9vpxgyb4jfycs",
-        KEY: "1997"
-    };
+    const API = "https://sheetdb.io/api/v1/9vpxgyb4jfycs";
+    const PASS = "1997"; // Admin paroli
 
-    const sys = {
-        isAuth: false,
-        imgBlob: "",
+    const app = {
+        isAdmin: false,
+        imgData: "",
+        pressTimer: null,
 
         init: function() {
-            this.fetchData();
-            setTimeout(() => document.getElementById('page-loader').style.display = 'none', 1000);
+            // Invisible admin logikasi (Long Press - 5 sekund)
+            const trigger = document.getElementById('logo-trigger');
+            trigger.onmousedown = () => this.pressTimer = setTimeout(() => this.login(), 5000);
+            trigger.onmouseup = () => clearTimeout(this.pressTimer);
+            trigger.ontouchstart = () => this.pressTimer = setTimeout(() => this.login(), 5000);
+            trigger.ontouchend = () => clearTimeout(this.pressTimer);
+
+            this.load();
         },
 
-        toggleAdmin: function() {
-            if(!this.isAuth) {
-                const p = prompt("Tizim kalitini kiriting:");
-                if(p === API_CONFIG.KEY) {
-                    this.isAuth = true;
-                    this.fetchData(); // Admin tugmalarini chiqarish uchun
-                } else { return alert("Xato kalit!"); }
-            }
-            document.getElementById('admin-panel').classList.toggle('active');
+        login: function() {
+            const p = prompt("Tizim kalitini kiriting:");
+            if(p === PASS) {
+                this.isAdmin = true;
+                document.getElementById('admin-modal').style.display = 'flex';
+                this.load(); // Admin tugmalari chiqishi uchun
+            } else { alert("Xato kalit!"); }
         },
 
-        handleImage: function(input) {
+        closeAdmin: function() { document.getElementById('admin-modal').style.display = 'none'; },
+
+        handleImg: function(input) {
             const file = input.files[0];
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -191,46 +146,35 @@
                 img.src = e.target.result;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 800; // Bazada ko'rinishi uchun optimallashtirish
-                    const scale = MAX_WIDTH / img.width;
-                    canvas.width = MAX_WIDTH;
-                    canvas.height = img.height * scale;
-                    
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
-                    // Rasmni sifatini biroz pasaytirib bazaga sig'adigan qilamiz
-                    this.imgBlob = canvas.toDataURL('image/jpeg', 0.6);
-                    document.getElementById('img-preview').innerHTML = `<img src="${this.imgBlob}" style="width:100%; border-radius:12px;">`;
+                    const w = 1200; const h = img.height * (w / img.width);
+                    canvas.width = w; canvas.height = h;
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    this.imgData = canvas.toDataURL('image/jpeg', 0.8);
+                    document.getElementById('preview-area').innerHTML = `<img src="${this.imgData}" style="width:100%; border-radius:8px; margin-top:10px;">`;
                 }
             };
             reader.readAsDataURL(file);
         },
 
-        submit: async function() {
-            const t = document.getElementById('title').value;
-            const b = document.getElementById('body').value;
-            const c = document.getElementById('category').value;
+        publish: async function() {
+            const t = document.getElementById('inp-title').value;
+            const b = document.getElementById('inp-body').value;
             const id = document.getElementById('edit-id').value;
 
-            if(!t || !b || !this.imgBlob) return alert("Ma'lumotlar yetarli emas!");
+            if(!t || !b) return alert("Hamma ma'lumotni kiritilishi shart!");
+            document.getElementById('loader').style.display = 'flex';
 
-            document.getElementById('page-loader').style.display = 'flex';
+            if(id) { await fetch(`${API}/id/${id}`, { method: 'DELETE' }); }
 
-            if(id) { await fetch(`${API_CONFIG.URL}/id/${id}`, { method: 'DELETE' }); }
-
-            const payload = {
-                data: [{
-                    id: id || Date.now(),
-                    title: t,
-                    body: b,
-                    category: c,
-                    image: this.imgBlob,
-                    date: new Date().toLocaleDateString('uz-UZ')
-                }]
-            };
-
-            await fetch(API_CONFIG.URL, {
+            const payload = { data: [{ 
+                id: id || new Date().getTime(), 
+                title: t, 
+                body: b, 
+                image: this.imgData, 
+                date: new Date().toLocaleDateString('uz-UZ') 
+            }] };
+            
+            await fetch(API, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(payload)
@@ -240,51 +184,50 @@
             setTimeout(() => location.reload(), 1500);
         },
 
-        fetchData: async function() {
+        load: async function() {
             try {
-                const res = await fetch(API_CONFIG.URL);
+                const res = await fetch(API);
                 const data = await res.json();
-                const grid = document.getElementById('portfolio-grid');
+                const feed = document.getElementById('news-feed');
                 
-                grid.innerHTML = data.reverse().map(item => `
-                    <div class="p-card">
-                        <div class="p-img-container">
-                            <img src="${item.image}" class="p-img" onerror="this.src='https://via.placeholder.com/800x600?text=Yuklanmoqda...'">
+                feed.innerHTML = data.reverse().map(p => `
+                    <div class="news-item">
+                        ${p.image ? `<img src="${p.image}" class="news-img" onerror="this.src='https://via.placeholder.com/800x400?text=Yuklanmoqda...'">` : ''}
+                        <div class="news-content">
+                            <span class="news-meta">📅 NASHR ETILDI • ${p.date || 'Bugun'}</span>
+                            <h2 class="news-title">${p.title}</h2>
+                            <p class="news-excerpt">${p.body}</p>
                         </div>
-                        <div class="p-content">
-                            <span class="p-type">${item.category || 'Loyihalar'}</span>
-                            <h2 class="p-title">${item.title}</h2>
-                            <p class="p-desc">${item.body}</p>
-                            <span style="font-size:0.8rem; color:var(--text-sub)">📅 ${item.date}</span>
-                        </div>
-                        <div class="card-actions" style="display: ${this.isAuth ? 'flex' : 'none'}">
-                            <button onclick="sys.edit('${item.id}', '${item.title}', '${encodeURIComponent(item.body)}', '${item.image}')" style="color:var(--primary); cursor:pointer; border:none; background:none; font-weight:bold;">TAHRIRLASH</button>
-                            <button onclick="sys.del('${item.id}')" style="color:red; cursor:pointer; border:none; background:none; font-weight:bold;">O'CHIRISH</button>
+                        <div class="admin-controls" style="display: ${this.isAdmin ? 'flex' : 'none'}">
+                            <button class="btn-action btn-edit" onclick="app.editPrep('${p.id}', '${p.title}', '${encodeURIComponent(p.body)}', '${p.image}')">TAHRIRLASH</button>
+                            <button class="btn-action btn-del" onclick="app.deleteItem('${p.id}')">O'CHIRISH</button>
                         </div>
                     </div>
                 `).join('');
-            } catch (e) { console.error("Aloqa uzildi"); }
+                document.getElementById('loader').style.display = 'none';
+            } catch (e) { console.error("API error"); }
         },
 
-        edit: function(id, title, body, img) {
-            document.getElementById('admin-panel').classList.add('active');
+        editPrep: function(id, title, body, img) {
+            document.getElementById('admin-modal').style.display = 'flex';
+            document.getElementById('modal-title').innerText = "Tahrirlash";
             document.getElementById('edit-id').value = id;
-            document.getElementById('title').value = title;
-            document.getElementById('body').value = decodeURIComponent(body);
-            this.imgBlob = img;
-            document.getElementById('img-preview').innerHTML = `<img src="${img}" style="width:100%; border-radius:12px;">`;
+            document.getElementById('inp-title').value = title;
+            document.getElementById('inp-body').value = decodeURIComponent(body);
+            this.imgData = img;
+            document.getElementById('preview-area').innerHTML = `<img src="${img}" style="width:100%; border-radius:8px; margin-top:10px;">`;
         },
 
-        del: async function(id) {
-            if(confirm("Ushbu loyiha o'chirilsinmi?")) {
-                document.getElementById('page-loader').style.display = 'flex';
-                await fetch(`${API_CONFIG.URL}/id/${id}`, { method: 'DELETE' });
+        deleteItem: async function(id) {
+            if(confirm("Ushbu xabarni tizimdan butunlay o'chirasizmi?")) {
+                document.getElementById('loader').style.display = 'flex';
+                await fetch(`${API}/id/${id}`, { method: 'DELETE' });
                 location.reload();
             }
         }
     };
 
-    sys.init();
+    app.init();
 </script>
 
 </body>
