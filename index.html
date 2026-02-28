@@ -3,142 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mening Ijodiy Portfoliom</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Ahror | Raqamli Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-bg: #0f172a;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --accent-color: #38bdf8;
-            --text-main: #f8fafc;
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --accent: #00d2ff;
+            --text: #ffffff;
         }
 
         body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at top left, #1e293b, #0f172a);
-            color: var(--text-main);
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Glassmorphism Header */
-        header {
-            padding: 2rem;
-            text-align: center;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 3rem;
+        /* Orqa fondagi effekt */
+        .blob {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            filter: blur(100px);
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 40px 20px;
         }
 
-        .profile-section {
+        header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 60px;
         }
 
-        .profile-section h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        header h1 {
+            font-size: 3rem;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
         }
 
-        /* Maqolalar Grid */
-        .grid {
+        header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        /* Maqolalar ro'yxati */
+        #portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding-bottom: 5rem;
+            grid-template-columns: 1fr;
+            gap: 25px;
         }
 
-        .card {
-            background: var(--glass-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+        .work-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .work-card:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .work-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .work-card p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Admin Panel qismi */
+        #admin-zone {
+            margin-top: 100px;
+            border-top: 1px dashed #333;
+            padding-top: 50px;
+            display: none; /* Dastlab yashirin */
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #111;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 12px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: black;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-color);
-        }
-
-        .card h3 {
-            color: var(--accent-color);
-            margin-top: 0;
-        }
-
-        .card p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #cbd5e1;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 0.2rem 0.8rem;
-            background: rgba(56, 189, 248, 0.2);
-            border-radius: 50px;
-            font-size: 0.7rem;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-        }
-
-        footer {
+        .admin-trigger {
+            opacity: 0.1;
+            cursor: pointer;
             text-align: center;
-            padding: 2rem;
-            font-size: 0.8rem;
-            opacity: 0.6;
+            margin-top: 100px;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="container">
-        <h2>Raqamli Portfolio</h2>
-    </div>
-</header>
+<div class="blob"></div>
 
 <div class="container">
-    <section class="profile-section">
-        <h1>Islombekning Ijodiy Arshivi</h1>
-        <p>Maqolalar, tadqiqotlar va raqamli ishlar jamlanmasi</p>
-    </section>
+    <header>
+        <h1>Ahror's Creative</h1>
+        <p>Raqamli savodxonlik va maqolalar portfoliosi</p>
+    </header>
 
-    <div class="grid">
-        <div class="card">
-            <span class="tag">Maqola</span>
-            <h3>Zamonaviy Media va Texnologiya</h3>
-            <p>Ushbu maqolada sun'iy intellektning bugungi kunda jurnalistikaga ta'siri haqida so'z boradi...</p>
+    <div id="portfolio-grid">
         </div>
 
-        <div class="card">
-            <span class="tag">Tadqiqot</span>
-            <h3>Raqamli Savodxonlik</h3>
-            <p>Jamiyatda axborot xavfsizligi va uni tahlil qilishning 5 ta muhim qoidasi tahlil qilingan.</p>
-        </div>
+    <div class="admin-trigger" onclick="checkAdmin()">● Admin kirish</div>
 
-        <div class="card">
-            <span class="tag">Ijodiy ish</span>
-            <h3>Vizual Kontent Dizayni</h3>
-            <p>Grafik dizayn orqali brendingni shakllantirish bo'yicha shaxsiy qarashlarim.</p>
-        </div>
+    <div id="admin-zone">
+        <h2>Yangi material qo'shish</h2>
+        <input type="text" id="title" placeholder="Maqola sarlavhasi">
+        <textarea id="content" rows="5" placeholder="Maqola matni yoki qisqacha mazmuni"></textarea>
+        <button class="btn" onclick="addItem()">Saytga joylash</button>
     </div>
 </div>
 
-<footer>
-    &copy; 2026. Barcha huquqlar himoyalangan.
-</footer>
+<script>
+    // Ma'lumotlarni brauzer xotirasida saqlash (Hozircha LocalStorage)
+    // Keyinchalik buni Firebase ga ulab qo'yish mumkin
+    let works = JSON.parse(localStorage.getItem('myWorks')) || [
+        {title: "Raqamli savodxonlik nima?", content: "Bu zamonaviy dunyoda axborot bilan ishlash qobiliyatidir..."},
+        {title: "Mening birinchi maqolam", content: "Bu yerda mening ijodiy namunalarim joy oladi."}
+    ];
+
+    function displayWorks() {
+        const grid = document.getElementById('portfolio-grid');
+        grid.innerHTML = '';
+        works.forEach(work => {
+            grid.innerHTML += `
+                <div class="work-card">
+                    <h3>${work.title}</h3>
+                    <p>${work.content}</p>
+                </div>
+            `;
+        });
+    }
+
+    function checkAdmin() {
+        let pass = prompt("Parolni kiriting:");
+        if(pass === "1234") { // Parolni o'zingizga yoqqaniga o'zgartiring
+            document.getElementById('admin-zone').style.display = 'block';
+            alert("Xush kelibsiz, Ahror!");
+        } else {
+            alert("Xato parol!");
+        }
+    }
+
+    function addItem() {
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+
+        if(title && content) {
+            works.unshift({title, content});
+            localStorage.setItem('myWorks', JSON.stringify(works));
+            displayWorks();
+            
+            // Tozalash
+            document.getElementById('title').value = '';
+            document.getElementById('content').value = '';
+            alert("Muvaffaqiyatli joylandi!");
+        }
+    }
+
+    // Birinchi marta yuklash
+    displayWorks();
+</script>
 
 </body>
 </html>
